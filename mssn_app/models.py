@@ -15,3 +15,12 @@ class User(db.Model):
 
     def __repr__(self):
         return self.username
+
+class Subscription(db.Model):
+    id = db.Column(db.Integer,primary_key=True)
+    full_name = db.Column(db.String(),nullable=False)
+    email = db.Column(db.String(),nullable=False,unique=True)
+    date_joined = db.Column(db.DateTime,default=datetime.utcnow)
+
+    def __repr__(self):
+        return f"{self.full_name} --- {self.email}"

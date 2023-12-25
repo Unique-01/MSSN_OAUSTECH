@@ -12,11 +12,11 @@ def create_app():
     db.init_app(app)
     migrate.init_app(app, db)
 
-    from . import views
-    app.register_blueprint(views.bp)
+    from . import auth
+    from . import main
+    app.register_blueprint(auth.bp)
+    app.register_blueprint(main.bp)
+    
 
-    @app.route('/')
-    def home():
-        return "Hello world"
-
+    
     return app

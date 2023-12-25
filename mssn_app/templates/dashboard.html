@@ -7,5 +7,13 @@
     {% block content %}
         <h3>Welcome {{user.username}}</h3>
         <h4>Your email is {{user.email}}</h4>
+        <div>
+            <h3>Acctive subscriptions</h3>
+            
+            {% for subscription in subscriptions %}
+                {{subscription}}
+            {% endfor %}
+                
+        </div>
     {% endblock content %}
         

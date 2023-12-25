@@ -12,9 +12,15 @@
 </head>
 <body>
     
+    {% for message in get_flashed_messages() %}
+        {{message}}
+    {% endfor %}
+        
+    
     {% block content %}
         
     {% endblock content %}
+    {% include 'subscription_form.html' %}
         
 </body>
 </html>
