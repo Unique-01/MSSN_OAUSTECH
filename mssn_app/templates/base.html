@@ -11,6 +11,7 @@
     </title>
 </head>
 <body>
+    {{ ckeditor.load() }}
     
     {% for message in get_flashed_messages() %}
         {{message}}

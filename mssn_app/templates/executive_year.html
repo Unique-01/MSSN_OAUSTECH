@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    MSSN Executives
+{% endblock title %}
+    
+    {% block content %}
+    <div>
+        {% for year in academic_year %}
+    <p><a href="{{url_for('main.executive_list',year=year)}}">{{year}} MSSN Executive</a></p>
+{% endfor %}
+    </div>
+    {% endblock content %}
+        

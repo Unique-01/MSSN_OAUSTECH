@@ -13,7 +13,84 @@
             {% for subscription in subscriptions %}
                 {{subscription}}
             {% endfor %}
+
+            <h3>Academic years</h3>
+            
+            {% for year in academic_year %}
+                {{year}}
+            {% endfor %}
+
+            <h3>Executive</h3>
+            
+            {% for executive in executive %}
+                {{executive.name}} --> {{executive.academic_year}}
+            {% endfor %}
                 
+                
+
+            <h3>Year form</h3>
+            <form action="{{url_for('main.add_academic_year')}}" method="post">
+                <input type="text" name="year" id="">
+                <button type="submit">Add Year</button>
+            </form>
+            <h4>Executive Form</h4>
+            <form action="{{url_for('main.add_executive')}}" method="post">
+                <input type="text" name="name" id="" placeholder="Executive full name">
+                <input type="text" name="position" id="" placeholder="post held">
+                <select name="academic_year_id" id="">
+                    
+                    {% for year in academic_year %}
+                        <option value="{{year.id}}">{{year.year}}</option>
+                    {% endfor %}
+                        
+                </select>
+                <button type="submit">submit</button>
+            </form>
+
+
+            <h3>Mail form</h3>
+            <form action="{{url_for('main.newsletter')}}" method="post">
+                <input type="text" name="subject" id="" placeholder="Email Subject">
+                <input type="text" name="body" id="" placeholder="Email Body">
+                <button type="submit">Send Mail</button>
+            </form>
+
+            <h3>Add Article</h3>
+            <form action="{{url_for('main.article_create')}}" method="post">
+                <input type="text" name="title" id="">
+                {{ ckeditor.create() }}
+                <button type="submit">Add Article</button>
+            </form>
+            <h3>Add category</h3>
+            <form action="{{url_for('main.add_document_category')}}" method="post">
+                <input type="text" name="name" id="">
+                <button type="submit">Add Category</button>
+            </form>
+                
+
+            <h3>Add document</h3>
+            <form action="{{url_for('main.add_document')}}" method="post" enctype="multipart/form-data">
+                <input type="text" name="title" id="">
+                <input type="file" name="document_file" id="">
+                <select name="category_id" id="">
+                    
+                    {% for category in document_category  %}
+                        <option value="{{category.id}}">{{category.name}}</option>
+                    {% endfor %}
+                        
+                </select>
+                <button type="submit">Add document</button>
+            </form>
+            
+            {% for document in document %}
+                <!-- <img src="{{ url_for('static', filename=document.document_file) }}" alt="hello"> -->
+                <!-- <img src="{{ url_for('static', filename='uploads/' + document.document_file) }}" alt="f"> -->
+                <a href="{{url_for('static',filename=document.document_file)}}" target="_blank" download>{{document.title}}</a>
+
+                
+                
+            {% endfor %}                
         </div>
+    
     {% endblock content %}
         

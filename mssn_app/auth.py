@@ -41,7 +41,7 @@ def register():
         session['user_id'] = new_user.id
 
         flash("Registration successfull, You're now logged in",'success')
-        return redirect(url_for('main.dashboard'))
+        return redirect(url_for('main.admin_dashboard'))
 
     return render_template('register.html')
 
@@ -55,7 +55,7 @@ def login():
         if user and check_password_hash(user.password,password):
             session['user_id'] = user.id
             flash('Login successfull','success')
-            return redirect(url_for('main.dashboard'))
+            return redirect(url_for('main.admin_dashboard'))
         else:
             flash('Invalid credentials','error')
 

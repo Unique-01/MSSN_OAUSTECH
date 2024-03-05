@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    hello
+{% endblock title %}
+    
+    {% block content %}
+        
+        {% for executive in executive_list %}
+            {{executive.name}}-->{{executive.position}}-->>{{executive.academic_year}}
+        {% endfor %}
+
+            
+    {% endblock content %}
+        
