@@ -17,6 +17,7 @@ def create_app():
     app.config['MAIL_PASSWORD'] = config('MAIL_PASSWORD')
     app.config['MAIL_USE_TLS'] = False
     app.config['MAIL_USE_SSL'] = True
+    app.config['UPLOAD_FOLDER'] = os.path.join(app.static_folder,"uploads")
     # app.config['CKEDITOR_PKG_TYPE'] = 'basic'
 
     from .models import db,migrate

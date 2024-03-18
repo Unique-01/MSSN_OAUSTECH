@@ -1,9 +1,9 @@
-from flask import Blueprint,g,session,render_template,request,flash,redirect,current_app,g
+from flask import Blueprint,g,session,render_template,request,flash,redirect,current_app,g,send_from_directory
 from .auth import login_required
 from .models import User,Subscription,db,Executive,AcademicYear,Article,Document,DocumentCategory
 from sqlalchemy.exc import IntegrityError
 from flask_mail import Message,Mail
-from werkzeug.utils import secure_filename,send_from_directory,send_file
+from werkzeug.utils import secure_filename
 import os
 
 
@@ -170,7 +170,7 @@ def add_document():
     
     if document_file and title and category_id:
         filename = secure_filename(document_file.filename)
-        upload_folder = os.path.join(current_app.config['STATIC_FOLDER'], "uploads")
+        upload_folder = current_app.config['UPLOAD_FOLDER']  #os.path.join(current_app.config['STATIC_FOLDER'], "uploads")
         document_path = os.path.join(upload_folder,filename)
         document_file.save(document_path)
         new_book = Document(title=title,category_id=category_id,document_file=filename,author_id=author.id)
@@ -187,16 +187,11 @@ def document_list():
     documents = Document.query.all()
     return render_template('document_list.html',documents=documents)
 
-@bp.route('/documents/<int:document_id>/download/')
+@bp.route('/documents/<int:document_id>/download')
 def download_document(document_id):
     document = Document.query.get(document_id)
-    # upload_folder = os.path.join(current_app.config['STATIC_FOLDER'], "uploads")\
-    return send_file(document.document_file)
-    # return send_from_directory(directory='static',filename=document.document_file)
-    
-    
-
-    
+    upload_folder = current_app.config["UPLOAD_FOLDER"]
+    return send_from_directory(upload_folder,document.document_file,as_attachment=True)
     
 
 
