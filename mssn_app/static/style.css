@@ -1,0 +1,48 @@
+.dropdown:hover>.dropdown-menu {
+  display: block;
+}
+.nav-item{
+  font-size: small;
+}
+.nav-link:hover{
+  color: rgb(41, 160, 41) !important;
+}
+.navbar-toggler{
+  border: none !important;
+}
+.navbar-toggler:focus,.navbar-toggler:active{
+  outline: none !important;
+  box-shadow: none !important;
+}
+.subscribe-bg{
+  background-color: grey;
+}
+.subscribe-head{
+  color: white;
+  font-weight: 900;
+}
+.background-container {
+  position: relative;
+  background-color: #f6f6f6;
+  background-image: url("mosque4.jpg");
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  transition: background .3s,border .3s,border-radius .3s,box-shadow .3s;
+  padding: 60px 0;
+}
+
+.display-4{
+  font-weight: 900 !important;
+  color: rgb(6, 88, 6);
+}
+
+.text-container {
+  color: black;
+  font-weight: bold;
+  z-index: 5;
+}
+.welcome-text{
+  color: black;
+  font-weight: 100;
+}

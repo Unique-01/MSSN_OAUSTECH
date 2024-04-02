@@ -1,0 +1,93 @@
+<nav class="navbar navbar-expand-lg bg-body-tertiary px-lg-5 px-sm-3 sticky-top py-3">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="#">
+            <img src="{{ url_for('static', filename='mssn-logo.jpeg') }}"
+                 alt="mssn-logo"
+                 width="53"
+                 height="50">
+            <img src="{{ url_for('static', filename='oaustech-logo.png') }}"
+                 alt="oaustech-logo"
+                 width="53"
+                 height="50">
+        </a>
+        <button class="navbar-toggler"
+                id="navbar-toggler"
+                type="button"
+                data-bs-toggle="collapse"
+                data-bs-target="#navbarNav"
+                aria-controls="navbarNav"
+                aria-expanded="false"
+                aria-label="Toggle navigation">
+                <i class="fa-solid fa-bars-staggered" id="ham-icon"></i>
+                <i class="fa-solid fa-x d-none" id="x-icon"></i>
+            <!--<span class="navbar-toggler-icon"></span>-->
+        </button>
+        <div class="collapse navbar-collapse " id="navbarNav">
+            <ul class="navbar-nav ms-auto nav-underline nav-fill">
+                <li class="nav-item">
+                    <a class="nav-link"
+                       aria-current="page"
+                       href='{{ url_for("main.index") }}'><i class="fa-solid fa-landmark-dome"></i> HOME</a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle"
+                       href="#"
+                       role="button"
+                       data-bs-toggle="dropdown"
+                       aria-expanded="false"><i class="fa-solid fa-address-card"></i> ABOUT US</a>
+                    <ul class="dropdown-menu">
+                        <li>
+                            <a class="dropdown-item" href="#">Action</a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#"><i class="fa-regular fa-newspaper"></i> NEWS</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#"><i class="fa-solid fa-book"></i> MSSN E-LIBRARY</a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle"
+                       href="#"
+                       role="button"
+                       data-bs-toggle="dropdown"
+                       aria-expanded="false"><i class="fa-solid fa-list-check"></i> PROGRAMMES</a>
+                    <ul class="dropdown-menu">
+                        <li>
+                            <a class="dropdown-item" href="#">Action</a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#"><i class="fa-solid fa-circle-dollar-to-slot"></i> DONATE</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#"><i class="fa-brands fa-searchengin fa-lg"></i></a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<script>
+    // Wait for the DOM to be fully loaded before accessing elements
+    document.addEventListener("DOMContentLoaded", function() {
+        var navToggler = document.getElementById("navbar-toggler");
+        var hamIcon = document.getElementById('ham-icon');
+        var xIcon = document.getElementById('x-icon');
+        
+        // Use addEventListener for click event
+        navToggler.addEventListener('click', function() {
+            // Use classList.contains() to check if a class exists
+            if (xIcon.classList.contains("d-none")) {
+                hamIcon.classList.add("d-none");
+                xIcon.classList.remove("d-none");
+            } else {
+                hamIcon.classList.remove("d-none");
+                xIcon.classList.add("d-none");
+            }
+        });
+    });
+</script>
+

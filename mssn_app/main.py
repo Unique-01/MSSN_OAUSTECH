@@ -49,12 +49,12 @@ def subscription():
                 html_content = render_template('subscription_email.html',name=new_subscription.full_name)
                 message = Message(subject='Welcome to MSSN OAUSTECH', sender='azeezsaheed2003@gmail.com', recipients=[new_subscription.email], html=html_content)
                 mail.send(message)
-                flash('You have subscribed successfully!')
+                flash('You have subscribed successfully!',"success")
                 return redirect(referrer)
             except IntegrityError:
                 error = "Email is already registered"
                 
-        flash(error)
+        flash(error,"danger")
         return redirect(referrer)
 
 
@@ -69,7 +69,7 @@ def add_academic_year():
         new_academic_year = AcademicYear(year=year)
         db.session.add(new_academic_year)
         db.session.commit()
-        flash('Academic year has been added successfully')
+        flash('Academic year has been added successfully',"success")
     return redirect(referrer)
 
 @bp.route('/add-executive',methods=['POST'])
@@ -84,9 +84,9 @@ def add_executive():
         new_executive = Executive(name=name,academic_year_id=academic_year_id,position=position)
         db.session.add(new_executive)
         db.session.commit()
-        flash('Executive has been added successfully')
+        flash('Executive has been added successfully',"success")
     else:
-        flash("All fields are required")
+        flash("All fields are required","warning")
     
     return redirect(referrer)
 
@@ -120,7 +120,7 @@ def newsletter():
         message = Message(subject=subject,sender='azeezsaheed2003@gmail.com',body=body,recipients=[subscription.email])
         mail.send(message)
 
-        flash('Mail has been sent successfully')
+        flash('Mail has been sent successfully',"success")
         return redirect(referrer)
 
 
@@ -133,7 +133,7 @@ def article_create():
     new_article = Article(title=title,body=body)
     db.session.add(new_article)
     db.session.commit()
-    flash('Article has been added successfully')
+    flash('Article has been added successfully',"success")
     return redirect(referrer)
 
 @bp.route('/articles/')
@@ -150,9 +150,9 @@ def add_document_category():
         new_category = DocumentCategory(name=name)
         db.session.add(new_category)
         db.session.commit()
-        flash("Category has been added succesfully")
+        flash("Category has been added succesfully","success")
     else:
-        flash("Category Name is required")
+        flash("Category Name is required","info")
 
     return redirect(referrer)
 
@@ -176,7 +176,7 @@ def add_document():
         new_book = Document(title=title,category_id=category_id,document_file=filename,author_id=author.id)
         db.session.add(new_book)
         db.session.commit()
-        flash('Document has been added sucessfully')
+        flash('Document has been added sucessfully',"success")
     else:
         flash("All fields are required")
 
