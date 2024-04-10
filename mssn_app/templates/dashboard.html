@@ -58,6 +58,7 @@
             <h3>Add Article</h3>
             <form action="{{url_for('main.article_create')}}" method="post">
                 <input type="text" name="title" id="">
+                <input type="file" name="cover_photo" accept="image/*" required>
                 {{ ckeditor.create() }}
                 <button type="submit">Add Article</button>
             </form>
@@ -89,7 +90,13 @@
 
                 
                 
-            {% endfor %}                
+            {% endfor %}    
+            <div>
+                <form action="{{url_for('main.add_event')}}" method="post" enctype="multipart/form-data">
+                    <input type="file" name="image" accept="image/*" required>
+                    <button type="submit">Add Event</button>
+                </form>
+            </div>            
         </div>
     
     {% endblock content %}

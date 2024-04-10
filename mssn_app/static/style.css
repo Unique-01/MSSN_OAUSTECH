@@ -15,34 +15,136 @@
   box-shadow: none !important;
 }
 .subscribe-bg{
-  background-color: grey;
+  /* background-color: rgb(81, 197, 81); */
+  background-color: rgb(5, 59, 5);
 }
 .subscribe-head{
   color: white;
   font-weight: 900;
 }
-.background-container {
+.welcome-section {
   position: relative;
   background-color: #f6f6f6;
-  background-image: url("mosque4.jpg");
+  background-image: url("mosque.jpg");
   background-position: center center;
   background-repeat: no-repeat;
   background-size: cover;
   transition: background .3s,border .3s,border-radius .3s,box-shadow .3s;
-  padding: 60px 0;
 }
 
-.display-4{
+.header-text{
   font-weight: 900 !important;
-  color: rgb(6, 88, 6);
+  /* color: rgb(6, 88, 6); */
+  color: white;
 }
 
 .text-container {
-  color: black;
+  color: white;
   font-weight: bold;
   z-index: 5;
+  background: rgba(94, 91, 94, 0.7);
+  padding: 60px 0;
+  /* background-color: #1a6645; */
 }
 .welcome-text{
-  color: black;
+  color: white;
   font-weight: 100;
+}
+.about-section{
+  padding: 50px  17%;
+  background-color: whitesmoke;
+}
+
+/* .events-section{
+  display: flex;
+  justify-content: center;
+  padding: 3% 5%;
+  background-color: whitesmoke;
+} */
+.carousel-item>img{
+  max-width: 100%;
+  max-height: 100vh;
+}
+.carousel-indicators li {
+  background-color: rgba(5, 99, 10, 0.5); /* Indicator color */
+  border-radius: 50%; /* Rounded shape */
+  width: 5px; /* Width of each indicator */
+  height: 12px; /* Height of each indicator */
+  margin: 0 5px; /* Spacing between indicators */
+  cursor: pointer; /* Cursor style */
+}
+
+.carousel-indicators .active {
+  background-color: #fff; /* Active indicator color */
+  width: 14px; /* Width of active indicator */
+  height: 14px; /* Height of active indicator */
+}
+
+.post .article-v2 {
+  padding: 0 15px;
+}
+
+.post .article-v2 .entry-title {
+  font-size: 16px;
+  color: #666666;
+  font-weight: 600;
+}
+.article-img {
+  width: 100%; /* Cover the entire width of the container */
+  height: auto; /* Maintain aspect ratio */
+  display: block; /* Ensure image is displayed as a block element */
+}
+
+.entry-title{
+  text-decoration: none !important;
+}
+.post .article-v2 .article-header {
+  margin-bottom: 15px;
+}
+
+.post .article-v2 .article-content-main {
+  -webkit-box-shadow: 1px 0px 20px 1px rgba(0, 0, 0, 0.15);
+          box-shadow: 1px 0px 20px 1px rgba(0, 0, 0, 0.15);
+  padding: 30px;
+  position: relative;
+  background: #fff;
+  margin-top: -75px;
+}
+
+@media only screen and (max-width: 1024px) {
+  .post .article-v2 .article-content-main {
+    padding: 15px;
+    margin-bottom: 30px;
+  }
+}
+
+.post .article-v2 .article-content p:last-of-type {
+  margin-bottom: 0;
+}
+
+.post .article-v2 .article-thumb {
+  position: relative;
+  left: 25px;
+  margin-bottom: 0;
+}
+
+.post .article-v2 .article-footer {
+  border-top: 1px solid #ebebeb;
+  padding-top: 15px;
+  margin-top: 20px;
+}
+
+.post .article-v2 .article-footer .more-link {
+  color: #ffa800;
+}
+
+.post .article-v2 .article-footer .footer-meta a {
+  color: #aaa;
+  font-size: 15px;
+  margin-right: 5px;
+}
+
+.post .article-v2 .article-footer .footer-meta a i {
+  font-size: 16px;
+  margin-left: 2px;
 }

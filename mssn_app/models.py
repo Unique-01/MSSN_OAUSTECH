@@ -56,6 +56,7 @@ class Article(db.Model):
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
     updated_at = db.Column(
         db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
+    cover_photo = db.Column(db.String(),nullable=True)
 
     def __repr__(self):
         return self.title
@@ -79,4 +80,7 @@ class Document(db.Model):
     def __repr__(self):
         return self.title
 
+class Event(db.Model):
+    id = db.Column(db.Integer,primary_key=True)
+    image = db.Column(db.String())
     

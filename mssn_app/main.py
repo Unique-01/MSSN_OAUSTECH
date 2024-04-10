@@ -1,22 +1,36 @@
-from flask import Blueprint,g,session,render_template,request,flash,redirect,current_app,g,send_from_directory
+from flask import Blueprint,g,session,render_template,request,flash,redirect,current_app,g,send_from_directory,url_for
 from .auth import login_required
-from .models import User,Subscription,db,Executive,AcademicYear,Article,Document,DocumentCategory
+from .models import User,Subscription,db,Executive,AcademicYear,Article,Document,DocumentCategory,Event
 from sqlalchemy.exc import IntegrityError
 from flask_mail import Message,Mail
 from werkzeug.utils import secure_filename
 import os
+from flask_ckeditor import upload_success, upload_fail
+from markupsafe import Markup
+from flask_paginate import Pagination,get_page_parameter, get_page_args
+
+
+
 
 
 
 bp = Blueprint('main',__name__)
 
-
+def strip_html_tags(text):
+    """Remove HTML tags from the given text."""
+    return Markup(text).striptags()
 
 @bp.route('/')
 def index():
     academic_year = AcademicYear.query.all()
-
-    return render_template('index.html',academic_year=academic_year)
+    events = Event.query.all()
+    #Articles objects with pagination
+    per_page=6
+    page = request.args.get(get_page_parameter(), type=int, default=1)
+    articles = Article.query.order_by(Article.updated_at.desc()).paginate(page=page,per_page=per_page)
+    total = len(Article.query.all())
+    pagination = Pagination(page=page,per_page=per_page, total=total, record_name='articles')
+    return render_template('index.html',academic_year=academic_year,events=events,articles=articles,pagination=pagination)
 
 
 @bp.route('/admin/')
@@ -129,12 +143,39 @@ def article_create():
     referrer = request.referrer
     title = request.form['title']
     body = request.form['ckeditor']
-
-    new_article = Article(title=title,body=body)
+    cover_photo = request.form['cover_photo']
+    if cover_photo:
+        filename = secure_filename(cover_photo.filename)
+        upload_folder = current_app.config['UPLOAD_FOLDER']  #os.path.join(current_app.config['STATIC_FOLDER'], "uploads")
+        document_path = os.path.join(upload_folder,filename)
+        cover_photo.save(document_path)
+        new_article = Article(title=title,body=body,cover_photo=cover_photo)
+    else:
+        new_article = Article(title=title,body=body)
     db.session.add(new_article)
     db.session.commit()
     flash('Article has been added successfully',"success")
     return redirect(referrer)
+
+@bp.route('/upload', methods=['GET','POST'])
+def upload():
+    upload_folder = current_app.config['UPLOAD_FOLDER']
+    f = request.files.get('upload')
+    if f:
+        extension = f.filename.split('.')[-1].lower()
+        if extension not in ['jpg', 'gif', 'png', 'jpeg']:
+            return upload_fail(message='Image only!')
+        f.save(os.path.join(upload_folder, f.filename))
+        url = url_for('main.uploaded_files', filename=f.filename)
+        return upload_success(url, filename=f.filename)
+    return upload_fail(message='No file uploaded')
+
+# Route for serving uploaded files
+@bp.route('/files/<path:filename>')
+def uploaded_files(filename):
+    path = current_app.config['UPLOAD_FOLDER']
+    return send_from_directory(path, filename)
+
 
 @bp.route('/articles/')
 def article_list():
@@ -190,8 +231,26 @@ def document_list():
 @bp.route('/documents/<int:document_id>/download')
 def download_document(document_id):
     document = Document.query.get(document_id)
-    upload_folder = current_app.config["UPLOAD_FOLDER"]
+    upload_folder = current_app.config['UPLOAD_FOLDER']
     return send_from_directory(upload_folder,document.document_file,as_attachment=True)
+
+@bp.route('/add-events/',methods=["POST"])
+def add_event():
+    referrer = request.referrer
+    image = request.files['image']
+    if image:
+        filename = secure_filename(image.filename)
+        upload_folder = current_app.config['UPLOAD_FOLDER']
+        image_path = os.path.join(upload_folder,filename)
+        image.save(image_path)
+        new_event = Event(image=filename)
+        db.session.add(new_event)
+        db.session.commit()
+        flash('Event has been added successfully','success')
+    else:
+        flash('All fields are required')
+
+    return redirect(referrer)
     
 
 

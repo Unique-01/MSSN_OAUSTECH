@@ -18,7 +18,10 @@ def create_app():
     app.config['MAIL_USE_TLS'] = False
     app.config['MAIL_USE_SSL'] = True
     app.config['UPLOAD_FOLDER'] = os.path.join(app.static_folder,"uploads")
-    # app.config['CKEDITOR_PKG_TYPE'] = 'basic'
+    app.config['CKEDITOR_FILE_UPLOADER'] = 'main.upload'
+    # app.config['CKEDITOR_SERVE_LOCAL'] = True
+
+    app.config['CKEDITOR_PKG_TYPE'] = 'full'
 
     from .models import db,migrate
 
@@ -33,6 +36,10 @@ def create_app():
     app.register_blueprint(main.bp)
     
     mail = Mail(app)
+
+    from .main import strip_html_tags
+    app.jinja_env.filters['strip_html_tags'] = strip_html_tags
+
 
     
     return app
