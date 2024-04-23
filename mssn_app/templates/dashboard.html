@@ -56,13 +56,20 @@
             </form>
 
             <h3>Add Article</h3>
-            <form action="{{url_for('main.article_create')}}" method="post">
+            <form action="{{url_for('main.article_create')}}" method="post" enctype="multipart/form-data">
+                <select name="category_id" id="">
+                    
+                    {% for category in article_category  %}
+                        <option value="{{category.id}}">{{category.name}}</option>
+                    {% endfor %}
+                        
+                </select>
                 <input type="text" name="title" id="">
                 <input type="file" name="cover_photo" accept="image/*" required>
                 {{ ckeditor.create() }}
                 <button type="submit">Add Article</button>
             </form>
-            <h3>Add category</h3>
+            <h3>Add document category</h3>
             <form action="{{url_for('main.add_document_category')}}" method="post">
                 <input type="text" name="name" id="">
                 <button type="submit">Add Category</button>
@@ -96,7 +103,13 @@
                     <input type="file" name="image" accept="image/*" required>
                     <button type="submit">Add Event</button>
                 </form>
-            </div>            
+            </div>  
+            <div>
+                <form action="{{url_for('main.add_article_category')}}" method="post">
+                    <input type="text" name="category" id="">
+                    <button type="submit">Add article category</button>
+                </form>
+            </div>          
         </div>
     
     {% endblock content %}

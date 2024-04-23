@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% block title %}
+    {{ year }} MSSN OAUSTECH EXCOS
+{% endblock title %}
+{% block content %}
+    
+    <section class="container mt-4">
+        <h1 class="text-center">{{ year }} MSSN Executives</h1>
+        <div class="table-responsive p-2">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Position</th>
+                        <th>Department</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for executive in executive_list %}
+                        <tr>
+                            <td>{{ executive.name }}</td>
+                            <td>{{ executive.position }}</td>
+                            <td>{{ executive.department if executive.department else "Department not available" }}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </section>
+{% endblock content %}

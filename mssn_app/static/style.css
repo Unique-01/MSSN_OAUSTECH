@@ -1,10 +1,10 @@
 .dropdown:hover>.dropdown-menu {
   display: block;
 }
-.nav-item{
+.nav-item, .dropdown-item{
   font-size: small;
 }
-.nav-link:hover{
+.nav-link:hover, .dropdown-item:hover{
   color: rgb(41, 160, 41) !important;
 }
 .navbar-toggler{
@@ -148,3 +148,10 @@
   font-size: 16px;
   margin-left: 2px;
 }
+
+.exco-year-link{
+  color: green;
+  text-decoration: none;
+}
+
+

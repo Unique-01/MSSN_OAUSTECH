@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+{% block title %}
+    MSSN Executives
+{% endblock title %}
+{% block content %}
+<div class="container my-5">
+    <h2 class="mb-4">MSSN OAUSTECH Executives</h2>
+    <div class="row">
+        <div class="col-md-6">
+            <ul class="list-group">
+                {% for year in academic_year %}
+                <li class="list-group-item">
+                    <a class="exco-year-link" href="{{ url_for('main.executive_detail_list',year=year) }}">{{ year }} MSSN OAUSTECH Executives</a>
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+</div>
+{% endblock content %}

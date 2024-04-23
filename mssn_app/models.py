@@ -43,7 +43,16 @@ class Executive(db.Model):
     academic_year_id = db.Column(db.Integer, db.ForeignKey(
         'academic_year.id'), nullable=False)
     position = db.Column(db.String(), default='Test')
+    department = db.Column(db.String(),nullable=True)
     timestamp = db.Column(db.DateTime, default=datetime.utcnow)
+
+    def __repr__(self):
+        return self.name
+
+class ArticleCategory(db.Model):
+    id = db.Column(db.Integer,primary_key=True)
+    name = db.Column(db.String(),nullable=False)
+    articles = db.relationship('Article',backref='article_category')
 
     def __repr__(self):
         return self.name
@@ -57,6 +66,7 @@ class Article(db.Model):
     updated_at = db.Column(
         db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
     cover_photo = db.Column(db.String(),nullable=True)
+    category_id  = db.Column(db.Integer,db.ForeignKey('article_category.id',name='article_category_id'),nullable=True)
 
     def __repr__(self):
         return self.title
