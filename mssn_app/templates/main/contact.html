@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+{% block title %}
+    Contact Us
+{% endblock title %}
+{% block content %}
+    <section class="contact-section my-5">
+        <div class="container">
+            <div class="contact-header text-center mb-5">
+                <h1 class="display-3">CONTACT US</h1>
+                <p>Whether you seek guidance, assistance, or simply wish to connect, we're here to serve you in the best way possible, inshaAllah.</p>
+                <hr>
+            </div>
+            <div class="contact-card">
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="card text-center p-4">
+                            <span class="display-2 text-success"><i class="fa-solid fa-location-dot"></i></span>
+                            <div class="card-body text-muted">
+                                <h3 class="card-title fw-bold">VISIT US</h3>
+                                <p class="text-muted fw-light">MSSN OAUSTECH Secretariat is located at Temporary Mosque, OAUSTECH Main Campus</p>
+                                <p class="text-success fw-bold">Temporary Mosque, Main Campus,OAUSTECH</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="card text-center p-4">
+                            <span class="display-2 text-success"><i class="fa-solid fa-phone"></i></span>
+                            <div class="card-body text-muted">
+                                <h3 class="card-title fw-bold">CALL US</h3>
+                                <p class="fw-light">If you prefer to speak with us directly, feel free to give us a call. We are ready to assist you with any inquiries or assistance you may need.</p>
+                            <p class="text-success fw-bold fs-5">+234 913 412 3192</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="card text-center p-4">
+                            <span class="display-2 text-success"><i class="fa-regular fa-envelope"></i></span>
+                            <div class="card-body text-muted">
+                                <h3 class="card-title fw-bold">EMAIL US</h3>
+                                <p class="fw-light">If you have any questions or would like to reach out to us via email, please use the following email address.</p>
+                                <p class="text-success fw-bold fs-5">mssnoaustech@gmail.com</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock content %}
+
+{% block subscription %}
+    {% include "main/subscription_form.html" %}
+{% endblock subscription %}
+    

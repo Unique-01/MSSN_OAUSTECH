@@ -1,43 +1,44 @@
 {% extends "base.html" %}
+{% set active_page = 'article' %}
 {% block title %}
     Articles
 {% endblock title %}
-
 {% block style %}
-    <link rel="stylesheet" href="{{url_for('static',filename='article_style.css')}}">
+    <link rel="stylesheet"
+          href="{{ url_for('static',filename='style/article_style.css') }}">
 {% endblock style %}
-    
 {% block content %}
-    <div id="main-content" class="blog-page">
+    <div id="main-content" class="blog-page mt-5">
         <div class="container">
-            <h1>ARTICLES</h1>
+            <h1 class="ms-5">ARTICLES</h1>
             <div class="row clearfix">
                 <div class="col-lg-8 col-md-12 left-box">
                     {% for article in article_list %}
                         <div class="card single_post">
                             <div class="body">
                                 <div class="img-post">
-                                    
                                     {% if article.cover_photo %}
-                                    <img class="d-block img-fluid"
-                                    src="{{url_for('static',filename='uploads/' + article.cover_photo)}}"
-                                    alt="{{article.title}}">
+                                        <img class="d-block img-fluid"
+                                             src="{{ url_for('static',filename='uploads/' + article.cover_photo) }}"
+                                             alt="{{ article.title }}">
                                     {% else %}
-                                    <img class="d-block img-fluid"
-                                         src="https://www.bootdey.com/image/800x280/FFB6C1/000000"
-                                         alt="First slide">
+                                       <!--<img class="d-block img-fluid"
+                                             src="https://www.bootdey.com/image/800x280/FFB6C1/000000"
+                                             alt="First slide">-->
+                                             <img class="d-block img-fluid"
+                                             src="{{url_for('static',filename='img/article_cover.jpg')}}"
+                                             alt="First slide">
                                     {% endif %}
-                                        
                                 </div>
                                 <h3>
-                                    <a href="{{url_for('main.article_detail', id=article.id)}}">{{article.title}}</a>
+                                    <a href="{{ url_for('main.article_detail', id=article.id) }}">{{ article.title }}</a>
                                 </h3>
-                                <p>
-                                    {{ article.body |strip_html_tags|truncate(200) }}                             </p>
+                                <p>{{ article.body |strip_html_tags|truncate(200) }}</p>
                             </div>
                             <div class="footer">
                                 <div class="actions">
-                                    <a href="{{url_for('main.article_detail',id=article.id)}}" class="btn btn-outline-secondary">Continue Reading</a>
+                                    <a href="{{ url_for('main.article_detail',id=article.id) }}"
+                                       class="btn btn-outline-secondary">Continue Reading</a>
                                 </div>
                                 <!-- <ul class="stats">
                                     <li>
@@ -58,10 +59,16 @@
                 <div class="col-lg-4 col-md-12 right-box">
                     <div class="card">
                         <div class="body search">
-                            <form action=""><div class="input-group m-b-0">
-                                <span class="input-group-text" id="addon-wrapping"><i class="fa fa-search"></i></span>
-                            <input type="text" class="form-control" aria-describedby="basic-addon1" placeholder="Search..." name="q">
-                        </div></form>
+                            <form action="">
+                                <div class="input-group m-b-0">
+                                    <span class="input-group-text" id="addon-wrapping"><i class="fa fa-search"></i></span>
+                                    <input type="text"
+                                           class="form-control"
+                                           aria-describedby="basic-addon1"
+                                           placeholder="Search..."
+                                           name="q">
+                                </div>
+                            </form>
                         </div>
                     </div>
                     <div class="card">
@@ -69,10 +76,14 @@
                             <h2>Categories Filter</h2>
                         </div>
                         <div class="body widget">
-                            <ul class="list-unstyled categories-clouds m-b-0">
-                                <li><a href="{{ url_for('main.article_list') }}">All</a></li>
+                            <ul class="list-unstyled  categories-clouds m-b-0">
+                                <li>
+                                    <a href="{{ url_for('main.article_list') }}" class="text-success">All</a>
+                                </li>
                                 {% for category in categories %}
-                                    <li><a href="{{ url_for('main.article_list', category=category.id) }}">{{ category.name }}</a></li>
+                                    <li>
+                                        <a href="{{ url_for('main.article_list', category=category.id) }}" class="text-success">{{ category.name }}</a>
+                                    </li>
                                 {% endfor %}
                             </ul>
                         </div>
@@ -88,16 +99,14 @@
                                         <p class="m-b-0">Apple Introduces Search Ads Basic</p>
                                         <span>jun 22, 2018</span>
                                         <div class="img-post">
-                                            <img src="https://www.bootdey.com/image/280x280/FFB6C1/000000"
-                                                 alt="Awesome Image">
+                                            <img src="https://www.bootdey.com/image/280x280/FFB6C1/000000" alt="Awesome Image">
                                         </div>
                                     </div>
                                     <div class="single_post">
                                         <p class="m-b-0">new rules, more cars, more races</p>
                                         <span>jun 8, 2018</span>
                                         <div class="img-post">
-                                            <img src="https://www.bootdey.com/image/280x280/FFB6C1/000000"
-                                                 alt="Awesome Image">
+                                            <img src="https://www.bootdey.com/image/280x280/FFB6C1/000000" alt="Awesome Image">
                                         </div>
                                     </div>
                                 </div>
@@ -112,56 +121,47 @@
                             <ul class="list-unstyled instagram-plugin m-b-0">
                                 <li>
                                     <a href="javascript:void(0);">
-                                        <img src="https://www.bootdey.com/image/80x80/FFB6C1/000000"
-                                             alt="image description">
+                                        <img src="https://www.bootdey.com/image/80x80/FFB6C1/000000" alt="image description">
                                     </a>
                                 </li>
                                 <li>
                                     <a href="javascript:void(0);">
-                                        <img src="https://www.bootdey.com/image/80x80/FFB6C1/000000"
-                                             alt="image description">
+                                        <img src="https://www.bootdey.com/image/80x80/FFB6C1/000000" alt="image description">
                                     </a>
                                 </li>
                                 <li>
                                     <a href="javascript:void(0);">
-                                        <img src="https://www.bootdey.com/image/80x80/FFB6C1/000000"
-                                             alt="image description">
+                                        <img src="https://www.bootdey.com/image/80x80/FFB6C1/000000" alt="image description">
                                     </a>
                                 </li>
                                 <li>
                                     <a href="javascript:void(0);">
-                                        <img src="https://www.bootdey.com/image/80x80/FFB6C1/000000"
-                                             alt="image description">
+                                        <img src="https://www.bootdey.com/image/80x80/FFB6C1/000000" alt="image description">
                                     </a>
                                 </li>
                                 <li>
                                     <a href="javascript:void(0);">
-                                        <img src="https://www.bootdey.com/image/80x80/FFB6C1/000000"
-                                             alt="image description">
+                                        <img src="https://www.bootdey.com/image/80x80/FFB6C1/000000" alt="image description">
                                     </a>
                                 </li>
                                 <li>
                                     <a href="javascript:void(0);">
-                                        <img src="https://www.bootdey.com/image/80x80/FFB6C1/000000"
-                                             alt="image description">
+                                        <img src="https://www.bootdey.com/image/80x80/FFB6C1/000000" alt="image description">
                                     </a>
                                 </li>
                                 <li>
                                     <a href="javascript:void(0);">
-                                        <img src="https://www.bootdey.com/image/80x80/FFB6C1/000000"
-                                             alt="image description">
+                                        <img src="https://www.bootdey.com/image/80x80/FFB6C1/000000" alt="image description">
                                     </a>
                                 </li>
                                 <li>
                                     <a href="javascript:void(0);">
-                                        <img src="https://www.bootdey.com/image/80x80/FFB6C1/000000"
-                                             alt="image description">
+                                        <img src="https://www.bootdey.com/image/80x80/FFB6C1/000000" alt="image description">
                                     </a>
                                 </li>
                                 <li>
                                     <a href="javascript:void(0);">
-                                        <img src="https://www.bootdey.com/image/80x80/FFB6C1/000000"
-                                             alt="image description">
+                                        <img src="https://www.bootdey.com/image/80x80/FFB6C1/000000" alt="image description">
                                     </a>
                                 </li>
                             </ul>
@@ -172,8 +172,6 @@
         </div>
     </div>
 {% endblock content %}
-
 {% block subscription %}
-    {% include "subscription_form.html" %}
+    {% include "main/subscription_form.html" %}
 {% endblock subscription %}
-    

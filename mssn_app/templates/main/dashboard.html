@@ -65,13 +65,14 @@
                         
                 </select>
                 <input type="text" name="title" id="">
-                <input type="file" name="cover_photo" accept="image/*" required>
+                <input type="file" name="cover_photo" accept="image/*" >
                 {{ ckeditor.create() }}
                 <button type="submit">Add Article</button>
             </form>
             <h3>Add document category</h3>
-            <form action="{{url_for('main.add_document_category')}}" method="post">
+            <form action="{{url_for('main.add_document_category')}}" method="post" enctype="multipart/form-data">
                 <input type="text" name="name" id="">
+                <input type="file" name="cover_photo" accept="image/*" >
                 <button type="submit">Add Category</button>
             </form>
                 
@@ -80,6 +81,7 @@
             <form action="{{url_for('main.add_document')}}" method="post" enctype="multipart/form-data">
                 <input type="text" name="title" id="">
                 <input type="file" name="document_file" id="">
+                <input type="file" name="cover_photo" accept="image/*" >
                 <select name="category_id" id="">
                     
                     {% for category in document_category  %}

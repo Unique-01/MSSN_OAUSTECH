@@ -1,0 +1,158 @@
+{% extends "base.html" %}
+{% set active_page = 'library' %}
+{% block title %}
+    E-library
+{% endblock title %}
+{% block style %}
+    <link rel="stylesheet"
+          href="{{ url_for('static',filename='style/library_style.css') }}">
+{% endblock style %}
+{% block content %}
+    <style>
+    .hidden {
+        display: none;
+    }
+    </style>
+    <main>
+        <div class=" container text-center  my-5">
+            <h1 class="display-4">MSSN OAUSTECH LIBRARY</h1>
+            <hr>
+        </div>
+       
+        <div class="container">
+            <div class="row accordion" id="accordion">
+                {% for category in document_category %}
+                    <div class="col-xl-6 category" id="category-{{ category.id }}">
+                        <div class="col-lg-12">
+                            <div class="card accordion-item product_list">
+                                <div class="card-header accordion-header">
+                                    <div class="btn btn-link accordion-button collapsed"
+                                         data-bs-toggle="collapse"
+                                         data-bs-target="#item-{{ category.id }}"
+                                         aria-expanded="true">
+                                        <div class="list_block">
+                                            <div class="list_image">
+                                                {% if category.cover_photo %}
+                                                    <img src="{{ url_for('static',filename='uploads/' + category.cover_photo) }}"
+                                                         class="image-fit-contain"
+                                                         alt="img" />
+                                                {% else %}
+                                                    <img src="{{ url_for('static',filename='img/mssn-logo.jpeg') }}"
+                                                         class="image-fit-contain"
+                                                         alt="img" />
+                                                {% endif %}
+                                            </div>
+                                            <div class="list_text">
+                                                <!-- <p class="subtitle">Up to 68% OFF</p> -->
+                                                <h5 class="title text-capitalize">{{ category.name }}</h5>
+                                                <p class="text">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div id="item-{{ category.id }}"
+                                     class="accordion-collapse collapse"
+                                     data-bs-parent="#accordion">
+                                    <div class="card-body accordion-body">
+                                        <div class="documents" id="documents-{{ category.id }}">
+                                            <div class="row">
+                                                {% for document in category.documents %}
+                                                    <div class="col-sm-4 col-6 ">
+                                                        <div class="list_block_item document">
+                                                            <a href="{{ url_for('main.download_document',document_id = document.id) }}">
+                                                                {% if document.cover_photo %}
+                                                                    <img src="{{ url_for('static',filename='uploads/' + document.cover_photo) }}"
+                                                                         class="image-fit-contain"
+                                                                         alt="img" />
+                                                                {% else %}
+                                                                    <img src="{{ url_for('static',filename='img/mssn-logo.jpeg') }}"
+                                                                         class="image-fit-contain"
+                                                                         alt="img" />
+                                                                {% endif %}
+                                                                <p class="category">{{ category.name }}</p>
+                                                                <h6 class="title text-capitalize">{{ document.title }}</h6>
+                                                            </a>
+                                                        </div>
+                                                    </div>
+                                                {% endfor %}
+                                                <div class="pagination mt-3 d-flex justify-content-center"
+                                                     id="pagination-{{ category.id }}"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </main>
+    <script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const categories = document.querySelectorAll('.category');
+
+        categories.forEach(category => {
+            const documents = category.querySelector('.documents');
+            const pagination = category.querySelector('.pagination');
+            const documentsPerPage = 4; // Adjust as needed
+
+            // Only proceed if pagination element exists
+            if (pagination) {
+                // Function to show documents for a specific page
+                const showPage = (page) => {
+                    const startIndex = (page - 1) * documentsPerPage;
+                    const endIndex = startIndex + documentsPerPage;
+                    const allDocuments = documents.querySelectorAll('.document');
+
+                    allDocuments.forEach((document, index) => {
+                        if (index >= startIndex && index < endIndex) {
+                            document.style.display = 'block';
+                        } else {
+                            document.style.display = 'none';
+                        }
+                    });
+
+                    // Update pagination controls
+                    updatePagination(page);
+                };
+
+                // Function to update pagination controls
+                const updatePagination = (currentPage) => {
+                    const totalDocuments = documents.querySelectorAll('.document').length;
+                    const totalPages = Math.ceil(totalDocuments / documentsPerPage);
+
+                    let paginationHTML = '';
+
+                    for (let i = 1; i <= totalPages; i++) {
+                        paginationHTML += `<button class="page-link">${i}</button>`;
+                    }
+
+                    pagination.innerHTML = paginationHTML;
+
+                    // Attach event listeners to pagination buttons
+                    const pageButtons = pagination.querySelectorAll('.page-link');
+                    pageButtons.forEach(button => {
+                        button.addEventListener('click', function () {
+                            showPage(parseInt(button.textContent));
+                        });
+                    });
+
+                    // Highlight current page
+                    pageButtons.forEach(button => {
+                        if (parseInt(button.textContent) === currentPage) {
+                            button.classList.add('active');
+                        } else {
+                            button.classList.remove('active');
+                        }
+                    });
+                };
+
+                // Show initial page
+                showPage(1);
+            }
+        });
+    });
+
+    </script>
+{% endblock content %}

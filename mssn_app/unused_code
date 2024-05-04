@@ -1,0 +1,255 @@
+@bp.route('/newsletter/', methods=['POST'])
+def newsletter():
+    referrer = request.referrer
+    subject = request.form['subject']
+    body = request.form['body']
+    subscriptions = Subscription.query.all()
+    mail = current_app.extensions['mail']
+
+    for subscription in subscriptions:
+        message = Message(subject=subject, sender='azeezsaheed2003@gmail.com',
+                          body=body, recipients=[subscription.email])
+        mail.send(message)
+
+        flash('Mail has been sent successfully', "success")
+        return redirect(referrer)
+
+
+@bp.route('/add-academic-year', methods=['POST'])
+@login_required
+def add_academic_year():
+    year = request.form['year']
+    referrer = request.referrer
+    if not year:
+        flash('Year is required')
+    else:
+        new_academic_year = AcademicYear(year=year)
+        db.session.add(new_academic_year)
+        db.session.commit()
+        flash('Academic year has been added successfully', "success")
+    return redirect(referrer)
+
+
+@bp.route('/add-executive', methods=['POST'])
+@login_required
+def add_executive():
+    referrer = request.referrer
+    academic_year_id = request.form['academic_year_id']
+    name = request.form['name']
+    position = request.form['position']
+
+    if academic_year_id and name:
+        new_executive = Executive(
+            name=name, academic_year_id=academic_year_id, position=position)
+        db.session.add(new_executive)
+        db.session.commit()
+        flash('Executive has been added successfully', "success")
+    else:
+        flash("All fields are required", "warning")
+
+    return redirect(referrer)
+
+@bp.route('/add-article/', methods=['POST'])
+def article_create():
+    referrer = request.referrer
+    title = request.form['title']
+    body = request.form['ckeditor']
+    cover_photo = request.files['cover_photo']
+    category_id = request.form['category_id']
+    if cover_photo:
+        filename = secure_filename(cover_photo.filename)
+        # os.path.join(current_app.config['STATIC_FOLDER'], "uploads")
+        upload_folder = current_app.config['UPLOAD_FOLDER']
+        document_path = os.path.join(upload_folder, filename)
+        cover_photo.save(document_path)
+        new_article = Article(title=title, body=body,
+                              cover_photo=filename, category_id=category_id)
+    else:
+        new_article = Article(title=title, body=body, category_id=category_id)
+    db.session.add(new_article)
+    db.session.commit()
+    flash('Article has been added successfully', "success")
+    return redirect(referrer)
+
+
+@bp.route('/add_article_category/', methods=['POST'])
+def add_article_category():
+    referrer = request.referrer
+    category = request.form['category']
+    if category:
+        new_category = ArticleCategory(name=category)
+        db.session.add(new_category)
+        db.session.commit()
+        flash("Article Category has been added", 'success')
+    else:
+        flash('All fields are required', 'error')
+    return redirect(referrer)
+
+bp.route('/add-document-category/', methods=['GET', 'POST'])
+@login_required
+def add_document_category():
+    referrer = request.referrer
+    name = request.form['name']
+    cover_photo = request.files['cover_photo']
+    if name:
+        new_category = DocumentCategory(name=name)
+        upload_folder = current_app.config['UPLOAD_FOLDER']
+        if cover_photo:
+            cover_photo_filename = secure_filename(cover_photo.filename)
+            cover_photo_path = os.path.join(upload_folder,cover_photo_filename)
+            cover_photo.save(cover_photo_path)
+            new_category.cover_photo = cover_photo_filename
+        db.session.add(new_category)
+        db.session.commit()
+        flash("Category has been added succesfully", "success")
+    else:
+        flash("Category Name is required", "info")
+
+    return redirect(referrer)
+
+
+@bp.route('/add-document/', methods=['POST'])
+def add_document():
+    referrer = request.referrer
+    title = request.form['title']
+    category_id = request.form['category_id']
+    document_file = request.files['document_file']
+    cover_photo = request.files['cover_photo']
+    if "user_id" in session:
+        author = User.query.get(session['user_id'])
+
+    if document_file and title and category_id:
+        document_filename = secure_filename(document_file.filename)
+        # os.path.join(current_app.config['STATIC_FOLDER'], "uploads")
+        upload_folder = current_app.config['UPLOAD_FOLDER']
+        document_path = os.path.join(upload_folder, document_filename)
+        document_file.save(document_path)
+        
+        new_book = Document(title=title, category_id=category_id,
+                            document_file=document_filename, author_id=author.id)
+        if cover_photo:
+            cover_photo_filename = secure_filename(cover_photo.filename)
+            cover_photo_path = os.path.join(upload_folder,cover_photo_filename)
+            cover_photo.save(cover_photo_path)
+            new_book.cover_photo = cover_photo_filename
+        db.session.add(new_book)
+        db.session.commit()
+        flash('Document has been added sucessfully', "success")
+    else:
+        flash("All fields are required")
+
+    return redirect(referrer)
+
+
+# @bp.route('/mssn-oaustech-library/')
+# def mssn_oaustech_library():
+#     document_category = DocumentCategory.query.all()
+#     documents = Document.query.all()
+#     return render_template('library.html', documents=documents, document_category=document_category)
+
+
+@bp.route('/add-events/', methods=["POST"])
+def add_event():
+    referrer = request.referrer
+    image = request.files['image']
+    if image:
+        filename = secure_filename(image.filename)
+        upload_folder = current_app.config['UPLOAD_FOLDER']
+        image_path = os.path.join(upload_folder, filename)
+        image.save(image_path)
+        new_event = Event(image=filename)
+        db.session.add(new_event)
+        db.session.commit()
+        flash('Event has been added successfully', 'success')
+    else:
+        flash('All fields are required')
+
+    return redirect(referrer)
+
+
+@bp.route('/academic_year/<int:id>/edit', methods=['GET', 'POST'])
+def edit_academic_year(id):
+    academic_year = AcademicYear.query.get_or_404(id)
+    return edit_object(academic_year, request.form, 'edit_academic_year.html')
+
+@bp.route('/academic_year/<int:id>/delete', methods=['POST'])
+def delete_academic_year(id):
+    academic_year = AcademicYear.query.get_or_404(id)
+    return delete_object(academic_year)
+
+# Routes for Executive
+@bp.route('/executive/<int:id>/edit', methods=['GET', 'POST'])
+def edit_executive(id):
+    executive = Executive.query.get_or_404(id)
+    return edit_object(executive, request.form, 'edit_executive.html')
+
+@bp.route('/executive/<int:id>/delete', methods=['POST'])
+def delete_executive(id):
+    executive = Executive.query.get_or_404(id)
+    return delete_object(executive)
+
+# Routes for ArticleCategory
+@bp.route('/article_category/<int:id>/edit', methods=['GET', 'POST'])
+def edit_article_category(id):
+    article_category = ArticleCategory.query.get_or_404(id)
+    return edit_object(article_category, request.form, 'edit_article_category.html')
+
+@bp.route('/article_category/<int:id>/delete', methods=['POST'])
+def delete_article_category(id):
+    article_category = ArticleCategory.query.get_or_404(id)
+    return delete_object(article_category)
+
+# Routes for Article
+@bp.route('/article/<int:id>/edit', methods=['GET', 'POST'])
+def edit_article(id):
+    article = Article.query.get_or_404(id)
+    return edit_object(article, request.form, 'edit_article.html')
+
+@bp.route('/article/<int:id>/delete', methods=['POST'])
+def delete_article(id):
+    article = Article.query.get_or_404(id)
+    return delete_object(article)
+
+# Routes for DocumentCategory
+@bp.route('/document_category/<int:id>/edit', methods=['GET', 'POST'])
+def edit_document_category(id):
+    document_category = DocumentCategory.query.get_or_404(id)
+    return edit_object(document_category, request.form, 'edit_document_category.html')
+
+@bp.route('/document_category/<int:id>/delete', methods=['POST'])
+def delete_document_category(id):
+    document_category = DocumentCategory.query.get_or_404(id)
+    return delete_object(document_category)
+
+# Routes for Document
+@bp.route('/document/<int:id>/edit', methods=['GET', 'POST'])
+def edit_document(id):
+    document = Document.query.get_or_404(id)
+    return edit_object(document, request.form, 'edit_document.html')
+
+@bp.route('/document/<int:id>/delete', methods=['POST'])
+def delete_document(id):
+    document = Document.query.get_or_404(id)
+    return delete_object(document)
+
+
+# @bp.route('/register',methods=['GET','POST'])
+# def register():
+    
+#     if request.method == 'POST':
+#         username = request.form['username']
+#         email = request.form['email']
+#         password = request.form['password']
+
+#         hashed_password = generate_password_hash(password)
+
+#         new_user = User(username=username,email=email,password=hashed_password)
+#         db.session.add(new_user)
+#         db.session.commit()
+
+#         session['user_id'] = new_user.id
+
+#         flash("Registration successfull, You're now logged in",'success')
+#         return redirect(url_for('main.admin_dashboard'))
+
+#     return render_template('register.html')

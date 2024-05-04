@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% set active_page = 'home' %}
 {% block title %}
     MSSN OAUSTECH Homepage
 {% endblock title %}
@@ -27,27 +28,30 @@
         </section>
         <section class=" about-section text-center shadow-sm m-md-5 ">
             <h1 class="display-3">About</h1>
+            <hr>
             <p>
                 The Muslim Students Society of Nigeria (MSSN), Olusegun Agagu University of Science and Technology, Okitipupa is the only Islamic organization in OAUSTECH Campus which is meant to cater for the welfare of Muslim Students on Campus.
                 The body provides academic, financial, moral as well as upliftment for Muslim Students so they can enjoy their stay during their time on Campus.
             </p>
         </section>
-        <section class="events-section text-center shadow m-md-5">
+        <section class="events-section text-center shadow-sm m-md-5">
             <div class="container">
                 <h1 class="display-4">Our Upcoming and Past Events</h1>
+                <hr>
                 <div class="row justify-content-center py-4">
-                    <div class="col-lg-8">
+                    <div>
                         <div id="carouselExampleRide"
                              class="carousel slide carousel-fade carousel-dark"
                              data-bs-ride="carousel">
+                             <div class="carousel-indicators">
+                                {% for item in events %}
+                                    <button data-bs-target="#carouselExampleRide"
+                                        data-bs-slide-to="{{ loop.index0 }}"
+                                        {% if loop.first %}class="active"{% endif %}></button>
+                                {% endfor %}
+                            </div>
                             <div class="carousel-inner">
-                                <div class="carousel-indicators">
-                                    {% for item in events %}
-                                        <li data-bs-target="#carouselExampleRide"
-                                            data-bs-slide-to="{{ loop.index0 }}"
-                                            {% if loop.first %}class="active"{% endif %}></li>
-                                    {% endfor %}
-                                </div>
+                                
                                 {% for item in events %}
                                     <div class="carousel-item {% if loop.first %}active{% endif %}">
                                         <img src="{{ url_for('static', filename='uploads/' + item.image) }}"
@@ -78,6 +82,7 @@
         <section class=" article-section container shadow-sm my-5 p-4">
             <div class="text-center py-4">
                 <h1 class="display-4">Articles</h1>
+                <hr>
             </div>
             <div class="row">
                 <div class="col-12">
@@ -93,14 +98,17 @@
                                                          alt="blog image"
                                                          class="article-img" />
                                                 {% else %}
-                                                    <img src="https://www.bootdey.com/image/350x280/20B2AA/000000" alt="">
+                                                    <img src="{{ url_for('static',filename='img/article_cover.jpg') }}"
+                                                         alt=""
+                                                         class="article-img">
                                                 {% endif %}
                                             </a>
                                         </figure>
                                         <div class="article-content-main">
                                             <div class="article-header">
                                                 <h2 class="entry-title text-capitalize ">
-                                                    <a href="#" class="link-offset-2 link-offset-3-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover text-dark">{{ article.title }}</a>
+                                                    <a href="#"
+                                                       class="link-offset-2 link-offset-3-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover text-dark">{{ article.title }}</a>
                                                 </h2>
                                                 <div class="entry-meta">
                                                     <div class="entry-date">{{ article.updated_at.strftime("%B %d, %Y") }}</div>
@@ -130,41 +138,12 @@
                             </div>
                         {% endfor %}
                     </div>
-                   
                 </div>
-                
             </div>
             <div class="mt-3 d-flex justify-content-center">{{ pagination.links }}</div>
         </section>
-        <!-- <section class="events-section text-center shadow m-md-5">
-            <div>
-                <h1 class="display-4">Events</h1>
-                
-                <div id="carouselExampleRide" class=" carousel slide carousel-fade carousel-dark" data-bs-ride="carousel">
-                     
-                    <div class="carousel-inner">
-                        {% for item in events %}
-                            <div class="carousel-item {% if loop.first %}active{% endif %}">
-                                <img src="{{ url_for('static', filename='uploads/' + item.image) }}" class="d-block " alt="Event Image">
-                            </div>
-                        {% endfor %}
-                    </div>
-                    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleRide" data-bs-slide="prev">
-                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                        <span class="visually-hidden">Previous</span>
-                    </button>
-                    <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleRide" data-bs-slide="next">
-                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                        <span class="visually-hidden">Next</span>
-                    </button>
-                </div>
-            </div>
-        </section> -->
-        
     </main>
 {% endblock content %}
-
 {% block subscription %}
-{% include "subscription_form.html" %}
+    {% include "main/subscription_form.html" %}
 {% endblock subscription %}
-    

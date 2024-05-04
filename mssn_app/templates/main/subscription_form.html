@@ -1,19 +1,19 @@
 <div class="sticky-bottom d-flex justify-content-center ps-3 py-2 subscribe-bg">
     <form action='{{ url_for("main.subscription") }}' method="post">
-        
         <div class="row">
             <h5 class="subscribe-head">Subscribe to our Newsletter</h5>
             <div class="col-auto">
-                <input type="text" class="form-control" name="full_name" placeholder="Full name (Surname first)">
-
+                <input type="text"
+                       class="form-control"
+                       name="full_name"
+                       placeholder="Full name (Surname first)">
             </div>
             <div class="col-auto">
                 <input type="email" class="form-control" name="email" placeholder="Email">
-
             </div>
-        <div class="col-auto">
-            <button type="submit" class="btn btn-light">Subscribe</button>
-        </div>
+            <div class="col-auto">
+                <button type="submit" class="btn btn-light">Subscribe</button>
+            </div>
         </div>
     </form>
 </div>
