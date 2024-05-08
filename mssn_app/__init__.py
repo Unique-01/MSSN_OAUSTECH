@@ -6,6 +6,7 @@ from flask_ckeditor import CKEditor
 from flask_admin import Admin
 from werkzeug.security import generate_password_hash
 from .models import User, db
+import click
 
 ckeditor = CKEditor()
 
@@ -59,9 +60,27 @@ def create_app():
 
     from .admin import admin, MyAdminIndexView
     admin.init_app(app, index_view=MyAdminIndexView())
+    
+    @app.cli.command('create-admin-user')
+    def create_admin_user():
+        # Check if the admin user already exists
+        admin_username = config('ADMIN_USERNAME')
+        admin_password = config('ADMIN_PASSWORD')
+        admin_email = config('ADMIN_EMAIL')
+        admin_user = User.query.filter_by(username=admin_username).first()
+
+        if not admin_user:
+            # Create the admin user with predefined credentials
+            hashed_password = generate_password_hash(admin_password)
+            admin_user = User(username=admin_username, email=admin_email,
+                              password=hashed_password, is_admin=True)
+            db.session.add(admin_user)
+            db.session.commit()
+            print('Admin user created successfully.')
+        
 
     # Create the admin user during app initialization
-    with app.app_context():
-        create_admin_user(app)
+    #with app.app_context():
+     #   create_admin_user(app)
 
     return app
