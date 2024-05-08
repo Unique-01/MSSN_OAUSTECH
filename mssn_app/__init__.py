@@ -29,7 +29,7 @@ def create_admin_user(app):
 
 def create_app():
     app = Flask(__name__, instance_relative_config=True)
-    app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///mssn.db'
+    app.config['SQLALCHEMY_DATABASE_URI'] = config('DATABASE_URL')
     app.config['SECRET_KEY'] = config('SECRET_KEY')
     app.config['MAIL_SERVER'] = 'smtp.gmail.com'
     app.config['MAIL_PORT'] = 465
