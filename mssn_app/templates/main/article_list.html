@@ -1,8 +1,14 @@
 {% extends "base.html" %}
-{% set active_page = 'article' %}
+{% set active_page = "article" %}
 {% block title %}
     Articles
 {% endblock title %}
+{% block meta %}
+    <meta name="description"
+          content="Explore insightful articles on Islam, campus life, and community events at OAUSTECH. Stay informed and engaged with our latest updates.">
+    <meta name="keywords"
+          content="OAUSTECH articles, campus news, Islamic articles, Muslim community, student life, educational resources">
+{% endblock meta %}
 {% block style %}
     <link rel="stylesheet"
           href="{{ url_for('static',filename='style/article_style.css') }}">
@@ -20,14 +26,18 @@
                                     {% if article.cover_photo %}
                                         <img class="d-block img-fluid"
                                              src="{{ url_for('static',filename='uploads/' + article.cover_photo) }}"
-                                             alt="{{ article.title }}">
+                                             alt="{{ article.title }}"
+                                             height=""
+                                             width="">
                                     {% else %}
-                                       <!--<img class="d-block img-fluid"
-                                             src="https://www.bootdey.com/image/800x280/FFB6C1/000000"
-                                             alt="First slide">-->
-                                             <img class="d-block img-fluid"
-                                             src="{{url_for('static',filename='img/article_cover.jpg')}}"
-                                             alt="First slide">
+                                        <!--<img class="d-block img-fluid"
+     src="https://www.bootdey.com/image/800x280/FFB6C1/000000"
+     alt="First slide">-->
+                                        <img class="d-block img-fluid"
+                                             src="{{ url_for('static',filename='img/article_cover.jpg') }}"
+                                             alt="First slide"
+                                             height=""
+                                             width="">
                                     {% endif %}
                                 </div>
                                 <h3>
@@ -78,11 +88,12 @@
                         <div class="body widget">
                             <ul class="list-unstyled  categories-clouds m-b-0">
                                 <li>
-                                    <a href="{{ url_for('main.article_list') }}" class="text-success">All</a>
+                                    <a href="{{ url_for("main.article_list") }}" class="text-success">All</a>
                                 </li>
                                 {% for category in categories %}
                                     <li>
-                                        <a href="{{ url_for('main.article_list', category=category.id) }}" class="text-success">{{ category.name }}</a>
+                                        <a href="{{ url_for('main.article_list', category=category.id) }}"
+                                           class="text-success">{{ category.name }}</a>
                                     </li>
                                 {% endfor %}
                             </ul>

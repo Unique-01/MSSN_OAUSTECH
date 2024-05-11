@@ -1,31 +1,31 @@
-# fly.toml app configuration file generated for mssnoaustech on 2024-05-04T09:07:14+01:00
+# fly.toml app configuration file generated for mssnoaustech on 2024-05-09T13:21:46+01:00
 #
 # See https://fly.io/docs/reference/configuration/ for information about how to use this file.
 #
 
-app = "mssnoaustech"
-primary_region = "jnb"
-console_command = "flask shell"
-
+app = 'mssnoaustech'
+primary_region = 'lhr'
 
 [build]
-  builder = "paketobuildpacks/builder:full"
-
-[env]
-  PORT = "8080"
 
 [http_service]
-  internal_port = 8080
+  internal_port = 8000
   force_https = true
   auto_stop_machines = true
   auto_start_machines = true
   min_machines_running = 0
-  processes = ["app"]
-  
+  processes = ['app']
+
+[[vm]]
+  memory = '512mb'
+  cpu_kind = 'shared'
+  cpus = 1
+
+[experimental]
+  allowed_public_ports = []
+  auto_rollback = true
+  private_network = true
+
 [deploy]
-    release_command = '''
-        flask --app mssn_app db init &&
-        flask --app mssn_app db migrate &&
-        flask --app mssn_app db upgrade &&
-        flask --app mssn_app create-admin-user
-    '''
+  release_command = "sh release.sh"
+

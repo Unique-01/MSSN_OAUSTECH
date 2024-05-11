@@ -2,29 +2,16 @@
 <html lang="en">
     <head>
         {{ ckeditor.load() }}
-        <meta charset="UTF-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        {% include "head.html" %}
         <title>
             {% block title %}
             {% endblock title %}
+            - MSSN OAUSTECH
         </title>
-        <link rel="stylesheet" href="{{ url_for('static',filename='style/style.css') }}">
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
-              rel="stylesheet"
-              integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
-              crossorigin="anonymous">
-        <script src="https://kit.fontawesome.com/2115e6b1cf.js"
-                crossorigin="anonymous"></script>
-        <link rel="stylesheet"
-              href="https://cdn.jsdelivr.net/npm/pixeden-stroke-7-icon@1.2.3/pe-icon-7-stroke/dist/pe-icon-7-stroke.min.css">
-              <link rel="preconnect" href="https://fonts.googleapis.com">
-              <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-              <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">    
-              {% block style %}
-                
-              {% endblock style %}
-                
+        {% block style %}
+        {% endblock style %}
+        {% block meta %}
+        {% endblock meta %}
     </head>
     <body>
         {% include "navbar.html" %}
@@ -44,94 +31,9 @@
         {% endwith %}
         {% block content %}
         {% endblock content %}
-        <footer class="text-center text-lg-start text-white">
-            <div class="container p-4 pb-0">
-                <section>
-                    <div class="row">
-                        <div class="col-md-3 col-lg-3 col-xl-3 mx-auto mt-3">
-                            <h6 class="text-uppercase mb-4 font-weight-bold">MSSN OAUSTECH</h6>
-                            <p class="footer-text">
-                                The Muslim Student Sociecty of Nigeria, Olusegun Agagu University of Science and Technology,Okitipupa, aim to foster unity, promote Islamic values, and empower students to excel both academically and spiritually.
-
-                                At MSSN, we are dedicated to creating a vibrant and inclusive community where students can connect, learn, and grow together in faith and fellowship. 
-                            </p>
-                        </div>
-                        <hr class="w-100 clearfix d-md-none" />
-                        <div class="col-md-2 col-lg-2 col-xl-2 mx-auto mt-3">
-                            <h6 class="text-uppercase mb-4 font-weight-bold">Quick links</h6>
-                            <div class="footer-text">
-                                <p>
-                                    <a href="" class="text-white">About</a>
-                                </p>
-                                <p>
-                                    <a href="" class="text-white">News</a>
-                                </p>
-                                <p>
-                                    <a href="" class="text-white">E-Library</a>
-                                </p>
-                                <p>
-                                    <a href="" class="text-white">Donate</a>
-                                </p>
-                            </div>
-                        </div>
-                        <hr class="w-100 clearfix d-md-none" />
-                        <div class="col-md-4 col-lg-3 col-xl-3 mx-auto mt-3">
-                            <h6 class="text-uppercase mb-4 font-weight-bold">Contact</h6>
-                            <div class="footer-text">
-                                <p>
-                                    <i class="fas fa-home mr-3"></i> MSSN OAUSTECH Secratariat, Temporary Mosque, OAUSTECH Main Campus
-                                </p>
-                                <p>
-                                    <a class="text-light" href="mailto:mssnoaustech@gmail.com"><i class="fas fa-envelope mr-3"></i> mssnoaustech@gmail.com</a>
-                                </p>
-                                <p>
-                                    <a class="text-light" href="tel:+2349134123192"><i class="fas fa-phone mr-3"></i> +234 913 412 3192</a>
-                                </p>
-                                <!--<p>
-                                    <i class="fas fa-print mr-3"></i> + 01 234 567 89
-                                </p>-->
-                            </div>
-                        </div>
-                        <hr class="w-100 clearfix d-md-none" />
-                        <div class="col-md-3 col-lg-2 col-xl-2 mx-auto mt-3">
-                            <h6 class="text-uppercase mb-4 font-weight-bold">Follow us</h6>
-                            <!-- Facebook -->
-                            <a href="https://www.facebook.com/profile.php?id=100074327832467" class="p-1 btn btn-floating">
-                                <img src="{{ url_for('static',filename='img/facebook.svg') }}"
-                                     width="30"
-                                     alt="">
-                            </a>
-                            <!-- Twitter -->
-                            <a href="https://youtube.com/shorts/gjs4bwrEhn0?si=l6faoMbwuzKnWAxA" class="p-1 btn btn-floating">
-                                <img src="{{ url_for('static',filename='img/youtube.png') }}"
-                                     width="30"
-                                     height="35"
-                                     alt="">
-                            </a>
-                            <!-- Google -->
-                            <a href="https://wa.me/message/WWIFCGPNTPRCD1" class="p-1 btn btn-floating">
-                                <img src="{{ url_for('static',filename='img/whatsapp.png') }}" width="30" alt="">
-                            </a>
-                            <!-- Instagram -->
-                            <a href="https://www.instagram.com/mssnoaustech?utm_source=qr&igsh=M2RneG92ZXN0ZzQ1" class="p-1 btn btn-floating">
-                                <img src="{{ url_for('static',filename='img/instagram.svg') }}"
-                                     width="30"
-                                     alt="">
-                            </a>
-                        </div>
-                    </div>
-                </section>
-            </div>
-            <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2)">
-                © 2024 Copyright:
-                <a class="text-white" href="https://mdbootstrap.com/">MSSN OAUSTECH</a>
-            </div>
-        </footer>
-        
+        {% include "footer.html" %}
         {% block subscription %}
-            
         {% endblock subscription %}
-            
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
                 integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
                 crossorigin="anonymous"></script>

@@ -20,11 +20,15 @@
                             {% if article.cover_photo %}
                                 <img src="{{ url_for('static',filename='uploads/' + article.cover_photo) }}"
                                      title=""
-                                     alt="">
+                                     alt=""
+                                     width=""
+                                     height="">
                             {% else %}
                                 <img src="{{ url_for('static',filename='img/article_cover.jpg') }}"
                                      title=""
-                                     alt="">
+                                     alt=""
+                                     width=""
+                                     height="">
                             {% endif %}
                         </div>
                         <div class="article-title">
@@ -63,11 +67,15 @@
                                             {% if post.cover_photo %}
                                                 <img src="{{ url_for('static',filename='uploads/' + post.cover_photo) }}"
                                                      title=""
-                                                     alt="">
+                                                     alt=""
+                                                     width=""
+                                                     height="">
                                             {% else %}
                                                 <img src="{{ url_for('static',filename='img/article_cover.jpg') }}"
                                                      title=""
-                                                     alt="">
+                                                     alt=""
+                                                     width=""
+                                                     height="">
                                             {% endif %}
                                         </a>
                                     </div>

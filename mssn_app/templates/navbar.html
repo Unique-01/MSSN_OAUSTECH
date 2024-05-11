@@ -25,7 +25,7 @@
         <div class="collapse navbar-collapse " id="navbarNav">
             <ul class="navbar-nav ms-auto nav-underline nav-fill">
                 <li class="nav-item">
-                    <a class="nav-link {{'active' if active_page=='home' else ''}} "
+                    <a class="nav-link {{ 'active' if active_page=='home' else '' }} "
                        aria-current="page"
                        href='{{ url_for("main.index") }}'><i class="fa-solid fa-landmark-dome"></i> HOME</a>
                 </li>
@@ -37,7 +37,7 @@
                        aria-expanded="false"><i class="fa-solid fa-address-card"></i> ABOUT US</a>
                     <ul class="dropdown-menu">
                         <li>
-                            <a class="dropdown-item" href="#">About MSSN OAUSTECH</a>
+                            <a class="dropdown-item" href="{{url_for('main.about')}}">About MSSN OAUSTECH</a>
                         </li>
                         <li>
                             <a class="dropdown-item"
@@ -49,11 +49,11 @@
                     </ul>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link {{'active' if active_page=='article' else ''}}"
+                    <a class="nav-link {{ 'active' if active_page=='article' else '' }}"
                        href="{{ url_for("main.article_list") }}"><i class="fa-regular fa-newspaper"></i> NEWS</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link {{'active' if active_page=='library' else ''}}"
+                    <a class="nav-link {{ 'active' if active_page=='library' else '' }}"
                        href="{{ url_for("main.mssn_oaustech_library") }}"><i class="fa-solid fa-book"></i> MSSN E-LIBRARY</a>
                 </li>
                 <li class="nav-item dropdown">
@@ -81,39 +81,48 @@
                     </ul>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link {{'active' if active_page=='donate' else ''}}"
-                       href="{{url_for('main.donate')}}"><i class="fa-solid fa-circle-dollar-to-slot"></i> DONATE</a>
+                    <a class="nav-link {{ 'active' if active_page=='donate' else '' }}"
+                       href="{{ url_for("main.donate") }}"><i class="fa-solid fa-circle-dollar-to-slot"></i> DONATE</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#" data-bs-toggle="modal" data-bs-target="#searchModal"><i class="fa fa-search"></i></a>
+                    <a class="nav-link"
+                       href="#"
+                       data-bs-toggle="modal"
+                       data-bs-target="#searchModal"><i class="fa fa-search"></i></a>
                 </li>
             </ul>
         </div>
     </div>
 </nav>
-<div class="modal fade" id="searchModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade"
+     id="searchModal"
+     tabindex="-1"
+     aria-labelledby="exampleModalLabel"
+     aria-hidden="true">
     <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body">
-          <form action="{{url_for('main.article_list')}}">
-            <div class="input-group m-b-0">
-                <span class="input-group-text" id="addon-wrapping"><i class="fa fa-search"></i></span>
-                <input type="text"
-                       class="form-control"
-                       aria-describedby="basic-addon1"
-                       placeholder="Search..."
-                       name="q">
-                       <button class="btn btn-success" type="submit">Search</button>
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button"
+                        class="btn-close"
+                        data-bs-dismiss="modal"
+                        aria-label="Close"></button>
             </div>
-          </form>
+            <div class="modal-body">
+                <form action="{{ url_for("main.article_list") }}">
+                    <div class="input-group m-b-0">
+                        <span class="input-group-text" id="addon-wrapping"><i class="fa fa-search"></i></span>
+                        <input type="text"
+                               class="form-control"
+                               aria-describedby="basic-addon1"
+                               placeholder="Search..."
+                               name="q">
+                        <button class="btn btn-success" type="submit">Search</button>
+                    </div>
+                </form>
+            </div>
         </div>
-        
-      </div>
     </div>
-  </div>
+</div>
 <script>
     // Wait for the DOM to be fully loaded before accessing elements
     document.addEventListener("DOMContentLoaded", function() {

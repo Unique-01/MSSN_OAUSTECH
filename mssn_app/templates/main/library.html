@@ -1,8 +1,14 @@
 {% extends "base.html" %}
-{% set active_page = 'library' %}
+{% set active_page = "library" %}
 {% block title %}
     E-library
 {% endblock title %}
+{% block meta %}
+    <meta name="description"
+          content="Discover a wealth of knowledge at the MSSN OAUSTECH library. Access Islamic literature, academic resources, and cultural materials to enhance your learning experience.">
+    <meta name="keywords"
+          content="MSSN OAUSTECH library, Islamic books, academic resources, cultural materials, educational literature, learning resources">
+{% endblock meta %}
 {% block style %}
     <link rel="stylesheet"
           href="{{ url_for('static',filename='style/library_style.css') }}">
@@ -18,7 +24,6 @@
             <h1 class="display-4">MSSN OAUSTECH LIBRARY</h1>
             <hr>
         </div>
-       
         <div class="container">
             <div class="row accordion" id="accordion">
                 {% for category in document_category %}
@@ -35,11 +40,15 @@
                                                 {% if category.cover_photo %}
                                                     <img src="{{ url_for('static',filename='uploads/' + category.cover_photo) }}"
                                                          class="image-fit-contain"
-                                                         alt="img" />
+                                                         alt="img"
+                                                         height=""
+                                                         width="" />
                                                 {% else %}
                                                     <img src="{{ url_for('static',filename='img/mssn-logo.jpeg') }}"
                                                          class="image-fit-contain"
-                                                         alt="img" />
+                                                         alt="img"
+                                                         height=""
+                                                         width="" />
                                                 {% endif %}
                                             </div>
                                             <div class="list_text">
@@ -63,11 +72,15 @@
                                                                 {% if document.cover_photo %}
                                                                     <img src="{{ url_for('static',filename='uploads/' + document.cover_photo) }}"
                                                                          class="image-fit-contain"
-                                                                         alt="img" />
+                                                                         alt="img"
+                                                                         height=""
+                                                                         width="" />
                                                                 {% else %}
                                                                     <img src="{{ url_for('static',filename='img/mssn-logo.jpeg') }}"
                                                                          class="image-fit-contain"
-                                                                         alt="img" />
+                                                                         alt="img"
+                                                                         height=""
+                                                                         width="" />
                                                                 {% endif %}
                                                                 <p class="category">{{ category.name }}</p>
                                                                 <h6 class="title text-capitalize">{{ document.title }}</h6>

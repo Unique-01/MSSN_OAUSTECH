@@ -163,3 +163,6 @@ def contact_us():
 @bp.route('/donate')
 def donate():
     return render_template('main/donate.html')
+@bp.route('/about')
+def about():
+    return render_template('main/about.html')

@@ -1,62 +1,73 @@
 {% extends "base.html" %}
-{% set active_page = 'donate' %}
-
-
+{% set active_page = "donate" %}
 {% block title %}
-    DONATE - MSSN OAUSTECH
+    Donate
 {% endblock title %}
-
-
+{% block meta %}
+    <meta name="description"
+          content="Support the mission of MSSN OAUSTECH with your generous donations. Contribute to our programs and initiatives aimed at fostering unity, promoting Islamic values, and empowering students on campus." />
+    <meta name="keywords"
+          content="MSSN OAUSTECH donations, support MSSN, charitable giving, Islamic charity, campus initiatives, student empowerment" />
+{% endblock meta %}
 {% block content %}
-
     <section class="mt-5 text-muted">
         <div class="container w-50 mx-auto">
             <div>
                 <h1 class="text-center display-5 fw-bold text-success">DONATE TO MSSN OAUSTECH</h1>
-                <hr>
-                <!-- Quote with thick vertical line -->
-                <figure class=" p-4">
+                <hr />
+                <figure class="p-4">
                     <blockquote class="blockquote">
-                      <p class="pb-2">
-                       <em> <i class="fas fa-quote-left fa-xs"></i>
-                        Whoever does righteousness, whether male or female, while he is a believer - We will surely cause him to live a good life, and We will surely give them their reward [in the Hereafter] according to the best of what they used to do. (Quran 16:97)
-                        <i class="fas fa-quote-right fa-xs"></i></em>
-                      </p>
+                        <p class="pb-2">
+                            <em>
+                                <i class="fas fa-quote-left fa-xs"></i>
+                                Whoever does righteousness, whether male or female, while he is a believer - We will surely cause him to live a good life, and We will surely give them their reward [in the Hereafter] according to the best of what they used to do. (Quran 16:97)
+                                <i class="fas fa-quote-right fa-xs"></i>
+                            </em>
+                        </p>
                     </blockquote>
-                  </figure>
-      
+                </figure>
             </div>
             <div class="mb-5">
-                <h3 class="">MSSN OAUSTECH BANK ACCOUNT DETAILS</h3>
-                <hr>
+                <h3>MSSN OAUSTECH BANK ACCOUNT DETAILS</h3>
+                <hr />
                 <ul class="list-unstyled">
-                    <li class="fs-5"><strong>Account Name:</strong> Muslim Students' Society of Nigeria, OAUSTECH </li>
-                    <li class="fs-5"><strong>Bank Name</strong> Polaris Bank</li>
-                    <li class="fs-5"><strong>Account Number</strong> 1140154382</li>
+                    <li class="fs-5">
+                        <strong>Account Name:</strong> Muslim Students' Society of Nigeria, OAUSTECH
+                    </li>
+                    <li class="fs-5">
+                        <strong>Bank Name</strong> Polaris Bank
+                    </li>
+                    <li class="fs-5">
+                        <strong>Account Number</strong> 1140154382
+                    </li>
                 </ul>
             </div>
             <div class="mb-5">
                 <h3>IMPACT OF YOUR DONATION</h3>
-                <hr>
+                <hr />
                 <p class="fs-5 fw-light">
                     Your generous contribution to MSSN OAUSTECH will support various essential initiatives, including website maintenance, transportation logistics such as our bus service, and the welfare of Muslim students at our university. Your donation enables us to continue serving the community and providing essential services to those in need.
                 </p>
             </div>
             <div>
-                <h3 class="text-upper">Rewards of Charity</h3>
-                <figure class=" p-4 pb-0">
+                <h3 class="text-upper">REWARDS OF CHARITY</h3>
+                <hr />
+                <figure class="p-4 pb-0">
                     <blockquote class="blockquote">
-                      <p class="">
-                       <em> <i class="fas fa-quote-left fa-xs"></i>
-                        Those who in charity spend of their goods by night and by day, in secret and in public, have their reward with their Lord: on them shall be no fear, nor shall they grieve.(2:274)
-                        <i class="fas fa-quote-right fa-xs"></i></em>
-                      </p>
+                        <p>
+                            <em>
+                                <i class="fas fa-quote-left fa-xs"></i>
+                                Those who in charity spend of their goods by night and by day, in secret and in public, have their reward with their Lord: on them shall be no fear, nor shall they grieve.(2:274)
+                                <i class="fas fa-quote-right fa-xs"></i>
+                            </em>
+                        </p>
                     </blockquote>
-                  </figure>
-                  <span class="fs-5 fw-light">May Allah accept your donation and reward you manifold in this life and the Hereafter.</span>
+                </figure>
+                <span class="fs-5 fw-light">May Allah accept your donation and reward you manifold in this life and the Hereafter.</span>
             </div>
-            <p class=" my-3 fs-5">For verification or further information, please feel free to contact us <a class="text-success fw-bold" href="{{url_for('main.contact_us')}}">HERE</a></p>
+            <p class="my-3 fs-5">
+                For verification or further information, please feel free to contact us <a class="text-success fw-bold" href="{{ url_for("main.contact_us") }}">HERE</a>
+            </p>
         </div>
     </section>
 {% endblock content %}
-    

@@ -1,8 +1,14 @@
 {% extends "base.html" %}
-{% set active_page = 'home' %}
+{% set active_page = "home" %}
 {% block title %}
-    MSSN OAUSTECH Homepage
+    Homepage
 {% endblock title %}
+{% block meta %}
+    <meta name="description"
+          content="Official website of the Muslim Students' Society of Nigeria at, Olusegun Agagu University Of Scienc and Technology (OAUSTECH),  Branch.">
+    <meta name="keywords"
+          content="mssn,oaustech,mssnoaustech,mssn oaustech,islam,islamic,organization,campus,mssn branch, oaustech muslim,okitipupa,religious,muslim student,muslim students, olusegun agagu univerisity,mss, mss ondo,mss oaustech,osustect,mssn osustech,mss osustech">
+{% endblock meta %}
 {% block content %}
     <main>
         <section class="welcome-section">
@@ -21,7 +27,7 @@
                             <br>
                             Explore our events, resources, and opportunities to grow academically and spiritually.
                         </p>
-                        <p>Barakallahu fiikum</p>
+                        <p>Barakallahu feekum</p>
                     </div>
                 </div>
             </div>
@@ -43,20 +49,21 @@
                         <div id="carouselExampleRide"
                              class="carousel slide carousel-fade carousel-dark"
                              data-bs-ride="carousel">
-                             <div class="carousel-indicators">
+                            <div class="carousel-indicators">
                                 {% for item in events %}
                                     <button data-bs-target="#carouselExampleRide"
-                                        data-bs-slide-to="{{ loop.index0 }}"
-                                        {% if loop.first %}class="active"{% endif %}></button>
+                                            data-bs-slide-to="{{ loop.index0 }}"
+                                            {% if loop.first %}class="active"{% endif %}></button>
                                 {% endfor %}
                             </div>
                             <div class="carousel-inner">
-                                
                                 {% for item in events %}
                                     <div class="carousel-item {% if loop.first %}active{% endif %}">
                                         <img src="{{ url_for('static', filename='uploads/' + item.image) }}"
                                              class="d-block w-100"
-                                             alt="Event Image">
+                                             alt="Event Image"
+                                             height=""
+                                             width="">
                                     </div>
                                 {% endfor %}
                             </div>
@@ -96,11 +103,15 @@
                                                 {% if article.cover_photo %}
                                                     <img src="{{ url_for('static',filename='uploads/' + article.cover_photo) }}"
                                                          alt="blog image"
-                                                         class="article-img" />
+                                                         class="article-img"
+                                                         height=""
+                                                         width="" />
                                                 {% else %}
                                                     <img src="{{ url_for('static',filename='img/article_cover.jpg') }}"
                                                          alt=""
-                                                         class="article-img">
+                                                         class="article-img"
+                                                         height=""
+                                                         width="">
                                                 {% endif %}
                                             </a>
                                         </figure>
