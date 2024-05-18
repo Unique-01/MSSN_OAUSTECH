@@ -38,13 +38,13 @@
                                         <div class="list_block">
                                             <div class="list_image">
                                                 {% if category.cover_photo %}
-                                                    <img src="{{ url_for('static',filename='uploads/' + category.cover_photo) }}"
+                                                    <img src="{{ url_for('main.uploaded_files',filename=category.cover_photo) }}"
                                                          class="image-fit-contain"
                                                          alt="img"
                                                          height=""
                                                          width="" />
                                                 {% else %}
-                                                    <img src="{{ url_for('static',filename='img/mssn-logo.jpeg') }}"
+                                                    <img src="{{ url_for('static',filename='img/mssn-logo.webp') }}"
                                                          class="image-fit-contain"
                                                          alt="img"
                                                          height=""
@@ -54,7 +54,6 @@
                                             <div class="list_text">
                                                 <!-- <p class="subtitle">Up to 68% OFF</p> -->
                                                 <h5 class="title text-capitalize">{{ category.name }}</h5>
-                                                <p class="text">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
                                             </div>
                                         </div>
                                     </div>
@@ -70,13 +69,13 @@
                                                         <div class="list_block_item document">
                                                             <a href="{{ url_for('main.download_document',document_id = document.id) }}">
                                                                 {% if document.cover_photo %}
-                                                                    <img src="{{ url_for('static',filename='uploads/' + document.cover_photo) }}"
+                                                                    <img src="{{ url_for('main.uploaded_files',filename= document.cover_photo) }}"
                                                                          class="image-fit-contain"
                                                                          alt="img"
                                                                          height=""
                                                                          width="" />
                                                                 {% else %}
-                                                                    <img src="{{ url_for('static',filename='img/mssn-logo.jpeg') }}"
+                                                                    <img src="{{ url_for('static',filename='img/mssn-logo.webp') }}"
                                                                          class="image-fit-contain"
                                                                          alt="img"
                                                                          height=""

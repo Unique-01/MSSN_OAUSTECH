@@ -34,7 +34,7 @@ a{
 .welcome-section {
   position: relative;
   /* background-color: #f6f6f6; */
-  background-image: url("../img/mosque.jpg");
+  background-image: url("../img/mosque.webp");
   background-position: center center;
   background-repeat: no-repeat;
   background-size: cover;

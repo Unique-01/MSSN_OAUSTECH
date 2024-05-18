@@ -10,8 +10,9 @@
           content="OAUSTECH articles, campus news, Islamic articles, Muslim community, student life, educational resources">
 {% endblock meta %}
 {% block style %}
-    <link rel="stylesheet"
-          href="{{ url_for('static',filename='style/article_style.css') }}">
+    <link rel="preload" 
+          href="{{ url_for('static',filename='style/article_style.css') }}" as="style" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="{{ url_for('static',filename='style/article_style.css') }}"></noscript>
 {% endblock style %}
 {% block content %}
     <div id="main-content" class="blog-page mt-5">
@@ -25,7 +26,7 @@
                                 <div class="img-post">
                                     {% if article.cover_photo %}
                                         <img class="d-block img-fluid"
-                                             src="{{ url_for('static',filename='uploads/' + article.cover_photo) }}"
+                                             src="{{ url_for('main.uploaded_files',filename=article.cover_photo) }}"
                                              alt="{{ article.title }}"
                                              height=""
                                              width="">
@@ -34,7 +35,7 @@
      src="https://www.bootdey.com/image/800x280/FFB6C1/000000"
      alt="First slide">-->
                                         <img class="d-block img-fluid"
-                                             src="{{ url_for('static',filename='img/article_cover.jpg') }}"
+                                             src="{{ url_for('static',filename='img/article_cover.webp') }}"
                                              alt="First slide"
                                              height=""
                                              width="">
@@ -50,17 +51,7 @@
                                     <a href="{{ url_for('main.article_detail',id=article.id) }}"
                                        class="btn btn-outline-secondary">Continue Reading</a>
                                 </div>
-                                <!-- <ul class="stats">
-                                    <li>
-                                        <a href="javascript:void(0);">General</a>
-                                    </li>
-                                    <li>
-                                        <a href="javascript:void(0);" class="fa fa-heart">28</a>
-                                    </li>
-                                    <li>
-                                        <a href="javascript:void(0);" class="fa fa-comment">128</a>
-                                    </li>
-                                </ul> -->
+                                
                             </div>
                         </div>
                     {% endfor %}
@@ -99,85 +90,7 @@
                             </ul>
                         </div>
                     </div>
-                    <!-- <div class="card">
-                        <div class="header">
-                            <h2>Popular Posts</h2>
-                        </div>
-                        <div class="body widget popular-post">
-                            <div class="row">
-                                <div class="col-lg-12">
-                                    <div class="single_post">
-                                        <p class="m-b-0">Apple Introduces Search Ads Basic</p>
-                                        <span>jun 22, 2018</span>
-                                        <div class="img-post">
-                                            <img src="https://www.bootdey.com/image/280x280/FFB6C1/000000" alt="Awesome Image">
-                                        </div>
-                                    </div>
-                                    <div class="single_post">
-                                        <p class="m-b-0">new rules, more cars, more races</p>
-                                        <span>jun 8, 2018</span>
-                                        <div class="img-post">
-                                            <img src="https://www.bootdey.com/image/280x280/FFB6C1/000000" alt="Awesome Image">
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="card">
-                        <div class="header">
-                            <h2>Instagram Post</h2>
-                        </div>
-                        <div class="body widget">
-                            <ul class="list-unstyled instagram-plugin m-b-0">
-                                <li>
-                                    <a href="javascript:void(0);">
-                                        <img src="https://www.bootdey.com/image/80x80/FFB6C1/000000" alt="image description">
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="javascript:void(0);">
-                                        <img src="https://www.bootdey.com/image/80x80/FFB6C1/000000" alt="image description">
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="javascript:void(0);">
-                                        <img src="https://www.bootdey.com/image/80x80/FFB6C1/000000" alt="image description">
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="javascript:void(0);">
-                                        <img src="https://www.bootdey.com/image/80x80/FFB6C1/000000" alt="image description">
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="javascript:void(0);">
-                                        <img src="https://www.bootdey.com/image/80x80/FFB6C1/000000" alt="image description">
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="javascript:void(0);">
-                                        <img src="https://www.bootdey.com/image/80x80/FFB6C1/000000" alt="image description">
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="javascript:void(0);">
-                                        <img src="https://www.bootdey.com/image/80x80/FFB6C1/000000" alt="image description">
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="javascript:void(0);">
-                                        <img src="https://www.bootdey.com/image/80x80/FFB6C1/000000" alt="image description">
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="javascript:void(0);">
-                                        <img src="https://www.bootdey.com/image/80x80/FFB6C1/000000" alt="image description">
-                                    </a>
-                                </li>
-                            </ul>
-                        </div>
-                    </div> -->
+                    
                 </div>
             </div>
         </div>

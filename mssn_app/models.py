@@ -65,7 +65,7 @@ class ArticleCategory(db.Model):
 class Article(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(), nullable=False)
-    body = db.Column(db.String())
+    body = db.Column(db.Text())
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
     updated_at = db.Column(
         db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
@@ -106,3 +106,15 @@ class Document(db.Model):
 class Event(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     image = db.Column(db.String())
+
+class AboutSection(db.Model):
+    __tablename__ = "about_section"
+    id = db.Column(db.Integer,primary_key=True)
+    content = db.Column(db.Text(),nullable=False)
+
+class AboutPage(db.Model):
+    __tablename__ = "about_page"
+    id = db.Column(db.Integer,primary_key=True)
+    content = db.Column(db.Text(),nullable=False)
+
+

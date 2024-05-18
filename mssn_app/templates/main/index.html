@@ -33,12 +33,13 @@
             </div>
         </section>
         <section class=" about-section text-center shadow-sm m-md-5 ">
-            <h1 class="display-3">About</h1>
+            <h1 class="display-4">About</h1>
             <hr>
-            <p>
-                The Muslim Students Society of Nigeria (MSSN), Olusegun Agagu University of Science and Technology, Okitipupa is the only Islamic organization in OAUSTECH Campus which is meant to cater for the welfare of Muslim Students on Campus.
-                The body provides academic, financial, moral as well as upliftment for Muslim Students so they can enjoy their stay during their time on Campus.
-            </p>
+            
+            {% if about_section %}
+            {{ about_section.content }}
+            {% endif %}
+                
         </section>
         <section class="events-section text-center shadow-sm m-md-5">
             <div class="container">
@@ -59,7 +60,7 @@
                             <div class="carousel-inner">
                                 {% for item in events %}
                                     <div class="carousel-item {% if loop.first %}active{% endif %}">
-                                        <img src="{{ url_for('static', filename='uploads/' + item.image) }}"
+                                        <img src="{{ url_for('main.uploaded_files', filename=item.image) }}"
                                              class="d-block w-100"
                                              alt="Event Image"
                                              height=""
@@ -99,15 +100,15 @@
                                 <article class="post">
                                     <div class="article-v2">
                                         <figure class="article-thumb">
-                                            <a href="#">
+                                            <a href="{{ url_for('main.article_detail',id=article.id) }}">
                                                 {% if article.cover_photo %}
-                                                    <img src="{{ url_for('static',filename='uploads/' + article.cover_photo) }}"
+                                                    <img src="{{ url_for('main.uploaded_files', filename=article.cover_photo) }}"
                                                          alt="blog image"
                                                          class="article-img"
                                                          height=""
                                                          width="" />
                                                 {% else %}
-                                                    <img src="{{ url_for('static',filename='img/article_cover.jpg') }}"
+                                                    <img src="{{ url_for('static',filename='img/article_cover.webp') }}"
                                                          alt=""
                                                          class="article-img"
                                                          height=""
@@ -134,13 +135,9 @@
                                             <div class="article-footer">
                                                 <div class="row">
                                                     <div class="col-6 text-left footer-link">
-                                                        <a href="#" class="more-link">Read More</a>
+                                                        <a href="{{ url_for('main.article_detail',id=article.id) }}"
+                                                           class="more-link">Read More</a>
                                                     </div>
-                                                    <!--  /.col-6 -->
-                                                    <!-- <div class="col-6 text-right footer-meta">
-                                                    <a href="#">65 <i class="pe-7s-comment"></i></a>
-                                                    <a href="#">50 <i class="pe-7s-share"></i></a>
-                                                </div> -->
                                                 </div>
                                             </div>
                                         </div>

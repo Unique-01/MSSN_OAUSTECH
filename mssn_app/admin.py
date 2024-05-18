@@ -2,11 +2,12 @@ from flask import g, redirect, flash, url_for, request, current_app
 from flask_admin import Admin, form, AdminIndexView, BaseView, expose
 from flask_admin.contrib.sqla import ModelView
 from flask_wtf import FlaskForm
-from wtforms import StringField, SubmitField
+from wtforms import StringField, SubmitField, TextAreaField
 from wtforms.validators import DataRequired
 from flask_ckeditor import CKEditorField
 from .models import *
 from flask_mail import Message
+from decouple import config
 
 
 admin = Admin(template_mode='bootstrap3')
@@ -19,6 +20,16 @@ admin.add_view(ModelView(ArticleCategory, db.session))
 
 class MyAdminIndexView(AdminIndexView):
     def is_accessible(self):
+        about_section = AboutSection.query.first()
+        about_page = AboutPage.query.first()
+        if not about_section:
+            about_section = AboutSection(content="Default Text")
+            db.session.add(about_section)
+            db.session.commit()
+        if not about_page:
+            about_page = AboutPage(content="Default Text")
+            db.session.add(about_page)
+            db.session.commit()
         # Adjust as needed based on your admin role check
         return g.user is not None and g.user.is_admin
 
@@ -37,7 +48,7 @@ class ArticleAdmin(ModelView):
                    'cover_photo', 'created_at', 'updated_at')
     form_extra_fields = {
         'cover_photo': form.ImageUploadField('Cover Photo',
-                                             base_path='mssn_app/static/uploads')
+                                             base_path=config('UPLOAD_FOLDER'))
     }
 
 
@@ -47,7 +58,7 @@ admin.add_view(ArticleAdmin(Article, db.session))
 class DocumentCategoryAdmin(ModelView):
     form_extra_fields = {
         'cover_photo': form.ImageUploadField('Cover Photo',
-                                             base_path='mssn_app/static/uploads')
+                                             base_path=config('UPLOAD_FOLDER'))
     }
 
 
@@ -59,9 +70,9 @@ class DocumentAdmin(ModelView):
     column_list = ('id', 'category', 'title', 'document_file', 'cover_photo')
     form_extra_fields = {
         'cover_photo': form.ImageUploadField('Cover Photo',
-                                             base_path='mssn_app/static/uploads'),
+                                             base_path=config('UPLOAD_FOLDER')),
         'document_file': form.FileUploadField('Document File',
-                                              base_path='mssn_app/static/uploads')
+                                              base_path=config('UPLOAD_FOLDER'))
     }
 
 
@@ -79,7 +90,7 @@ admin.add_view(ExecutiveAdmin(Executive, db.session))
 class EventAdmin(ModelView):
     form_extra_fields = {
         'image': form.ImageUploadField('Image',
-                                       base_path='mssn_app/static/uploads')
+                                       base_path=config('UPLOAD_FOLDER'))
     }
 
 
@@ -115,3 +126,29 @@ class NewsletterAdminView(BaseView):
 
 admin.add_view(NewsletterAdminView(
     name='Send Newsletter', endpoint='newsletter'))
+
+
+class AboutSectionForm(FlaskForm):
+    content = TextAreaField("About Section Content",
+                            validators=[DataRequired()])
+    submit = SubmitField("Update")
+
+
+class AboutSectionAdminView(ModelView):
+    can_create = False
+    can_delete = False
+
+
+admin.add_view(AboutSectionAdminView(AboutSection, db.session))
+
+
+class AboutPageAdminView(ModelView):
+    can_create = False
+    can_delete = False
+    form_overrides = {
+        'content': CKEditorField
+    }
+    edit_template = 'admin/about_edit.html'
+
+
+admin.add_view(AboutPageAdminView(AboutPage, db.session))

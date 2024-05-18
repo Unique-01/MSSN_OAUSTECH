@@ -28,4 +28,8 @@ primary_region = 'lhr'
 
 [deploy]
   release_command = "sh release.sh"
+  
+[mounts]
+  source="mssnapp_data"
+  destination="/app/mssn_app/media"
 

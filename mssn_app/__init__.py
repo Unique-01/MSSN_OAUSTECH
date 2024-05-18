@@ -7,8 +7,11 @@ from flask_admin import Admin
 from werkzeug.security import generate_password_hash
 from .models import User, db
 import click
+from flask_sitemap import Sitemap
+
 
 ckeditor = CKEditor()
+
 
 
 def create_admin_user(app):
@@ -38,10 +41,14 @@ def create_app():
     app.config['MAIL_PASSWORD'] = config('MAIL_PASSWORD')
     app.config['MAIL_USE_TLS'] = False
     app.config['MAIL_USE_SSL'] = True
-    app.config['UPLOAD_FOLDER'] = os.path.join(app.static_folder, "uploads")
+    app.config['UPLOAD_FOLDER'] = config("UPLOAD_FOLDER")
     app.config['CKEDITOR_FILE_UPLOADER'] = 'main.upload'
     app.config['CKEDITOR_PKG_TYPE'] = 'full'
     app.config['FLASK_ADMIN_SWATCH'] = 'cerulean'
+    # app.config['SITEMAP_IGNORE_ENDPOINTS'] = ['/upload/',]
+    # app.config['SITEMAP_URL_SCHEME'] = 'https'
+    # app.config['SITEMAP_INCLUDE_RULES_WITHOUT_PARAMS'] = True
+    
 
     from .models import db, migrate
     db.init_app(app)
@@ -54,6 +61,9 @@ def create_app():
     app.register_blueprint(main.bp)
 
     mail = Mail(app)
+    # sitemap = Sitemap(app=app)
+    from .main import sitemapper
+    sitemapper.init_app(app)
 
     from .main import strip_html_tags
     app.jinja_env.filters['strip_html_tags'] = strip_html_tags

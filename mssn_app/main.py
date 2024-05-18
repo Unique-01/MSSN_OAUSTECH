@@ -1,5 +1,5 @@
-from flask import Blueprint, render_template,request, flash, redirect, current_app, send_from_directory, url_for
-from .models import User, Subscription, db, Executive, AcademicYear, Article, Document, DocumentCategory, Event, ArticleCategory
+from flask import Blueprint, render_template, request, flash, redirect, current_app, send_from_directory, url_for
+from .models import User, Subscription, db, Executive, AcademicYear, Article, Document, DocumentCategory, Event, ArticleCategory, AboutPage, AboutSection
 from sqlalchemy.exc import IntegrityError
 from flask_mail import Message, Mail
 import os
@@ -7,20 +7,23 @@ from flask_ckeditor import upload_success, upload_fail
 from markupsafe import Markup
 from flask_paginate import Pagination, get_page_parameter
 from decouple import config
+from flask_sitemapper import Sitemapper
 
 
 bp = Blueprint('main', __name__)
+sitemapper = Sitemapper()
 
 
 def strip_html_tags(text):
     """Remove HTML tags from the given text."""
     return Markup(text).striptags()
 
-
+@sitemapper.include()
 @bp.route('/')
 def index():
     academic_year = AcademicYear.query.all()
     events = Event.query.all()
+    
     # Articles objects with pagination
     per_page = 6
     page = request.args.get(get_page_parameter(), type=int, default=1)
@@ -29,7 +32,11 @@ def index():
     total = len(Article.query.all())
     pagination = Pagination(page=page, per_page=per_page,
                             total=total, record_name='articles')
-    return render_template('main/index.html', academic_year=academic_year, events=events, articles=articles, pagination=pagination)
+    try:
+        about_section = AboutSection.query.first()
+    except:
+        about_section = None
+    return render_template('main/index.html', academic_year=academic_year, events=events, articles=articles, pagination=pagination, about_section=about_section)
 
 
 @bp.route('/subscribe', methods=['GET', 'POST'])
@@ -62,7 +69,7 @@ def subscription():
         flash(error, "danger")
         return redirect(referrer)
 
-
+@sitemapper.include()
 @bp.route('/executive_list/')
 def executive_year_list():
     academic_year = AcademicYear.query.all()
@@ -80,7 +87,7 @@ def executive_detail_list(year):
         return redirect(referrer)
     return render_template('main/executive_detail_list.html', executive_list=executive_list, year=year)
 
-
+@sitemapper.include()
 @bp.route('/articles/')
 def article_list():
     category_id = request.args.get('category')
@@ -118,7 +125,7 @@ def article_detail(id):
         Article.updated_at.desc()).limit(4).all()
     return render_template('main/article_detail.html', article=article, latest_posts=latest_posts)
 
-
+@sitemapper.include()
 @bp.route('/mssn-oaustech-library/')
 def mssn_oaustech_library():
     document_category = DocumentCategory.query.all()
@@ -152,17 +159,30 @@ def upload():
 # Route for serving uploaded files
 @bp.route('/files/<path:filename>')
 def uploaded_files(filename):
+    # path =config('UPLOAD_FOLDER')
     path = current_app.config['UPLOAD_FOLDER']
-    return send_from_directory(path, filename)
+    file_path = os.path.join(path, filename)
+    return send_from_directory(os.path.dirname(file_path), os.path.basename(file_path))
 
-
-@bp.route('/contact-us')
+@sitemapper.include()
+@bp.route('/contact-us/')
 def contact_us():
     return render_template('main/contact.html')
 
-@bp.route('/donate')
+@sitemapper.include()
+@bp.route('/donate/')
 def donate():
     return render_template('main/donate.html')
-@bp.route('/about')
+
+@sitemapper.include()
+@bp.route('/about/')
 def about():
-    return render_template('main/about.html')
+    try:
+        about_page = AboutPage.query.first()
+    except:
+        about_page = None
+    return render_template('main/about.html', about_page=about_page)
+    
+@bp.route("/sitemap.xml")
+def sitemap():
+  return sitemapper.generate()
